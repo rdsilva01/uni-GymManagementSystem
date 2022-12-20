@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Ginasio {
 	private String nome;
-	private ArrayList<Float> precos;
-	private ArrayList<Float> quotas;
+	private ArrayList<Double> precos;
+	private ArrayList<Double> quotas;
 	private ArrayList<Aula> aulas;
 	private ArrayList<Membro> membros;
 	private ArrayList<Pessoa> totalpax;
@@ -11,8 +11,8 @@ public class Ginasio {
 	
 	public Ginasio(String nome) {
 		this.nome = nome;
-		precos = new ArrayList<Float>();
-		quotas = new ArrayList<Float>();
+		precos = new ArrayList<Double>();
+		quotas = new ArrayList<Double>();
 		aulas = new ArrayList<Aula>();
 		membros = new ArrayList<Membro>();
 		totalpax = new ArrayList<Pessoa>();
@@ -27,19 +27,19 @@ public class Ginasio {
 		this.nome = nome;
 	}
 
-	public ArrayList<Float> getPrecos() {
+	public ArrayList<Double> getPrecos() {
 		return precos;
 	}
 
-	public void setPrecos(ArrayList<Float> precos) {
+	public void setPrecos(ArrayList<Double> precos) {
 		this.precos = precos;
 	}
 
-	public ArrayList<Float> getQuotas() {
+	public ArrayList<Double> getQuotas() {
 		return quotas;
 	}
 
-	public void setQuotas(ArrayList<Float> quotas) {
+	public void setQuotas(ArrayList<Double> quotas) {
 		this.quotas = quotas;
 	}
 
