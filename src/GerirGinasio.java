@@ -7,6 +7,27 @@ import myinputs.Ler;
 
 public class GerirGinasio {
 	
+	public static int menu4() {
+		int escolh4;
+		System.out.println("Qual das seguintes opções deseja ver?");
+		System.out.println("1 - Membros");
+		System.out.println("2 - Staff");
+		System.out.println("3 - Aulas");
+		System.out.println("4 - Pessoas");
+		System.out.println("5 - Sair");
+		escolh4 = Ler.umInt();
+		return escolh4;
+	}
+	
+	public static int menu3() {
+		int escolh3;
+		System.out.println("Deseja ver Membros, Staff, Aulas, etc?");
+		System.out.println("1 - Sim");
+		System.out.println("2 - Não");
+		escolh3 = Ler.umInt();
+		return escolh3;
+	}
+	
 	// menu geral
 	public static int menu() {
 		int opcao;
@@ -25,12 +46,11 @@ public class GerirGinasio {
 	public static int menumembro() {
 		int opcaomem;
 		System.out.println("1 - Criar membro");
-		System.out.println("2 - Consultar membros");
-		System.out.println("3 - Consultar membro, dado o nome");
-		System.out.println("4 - Consultar membro, dado o número");
-		System.out.println("5 - Alterar membro");
-		System.out.println("6 - Apagar membro");
-		System.out.println("7 - Terminar");
+		System.out.println("2 - Listar membros");
+		System.out.println("3 - Consultar membro, dado o nome ou número ou NIF");
+		System.out.println("4 - Alterar membro");
+		System.out.println("5 - Apagar membro");
+		System.out.println("6 - Terminar");
 		System.out.println("Qual a sua opção? ");
 		opcaomem = Ler.umInt();
 		return opcaomem;
@@ -66,35 +86,123 @@ public class GerirGinasio {
 		return opcaoaula;
 	}
 	
-	public static void main(String[] args) {
-		int escolha;
+	public static void main (String[] args) {
+		int escolha, escolha2, escolha3, escolha4;
 		
-		// LISTA DOS ALUNOS
+		// ARRAYLISTS
 		ArrayList<Ginasio> ginasios = new ArrayList<Ginasio>();
 		
 		// Ler ficheiro
 		try {
 	
 			ObjectInputStream is = new ObjectInputStream( new FileInputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+			int ult = is.readInt();
+			Ginasio.setUltimo(ult);
+			/* for(int i = 0; i < ult; i++) {
+				ginasios.get(i).getMembros().get(0).getUltimo();	
+			} */
 			ginasios = (ArrayList<Ginasio>) is.readObject();
 		}
 		catch(IOException e) {
 			System.out.println(e.getMessage());
 		}
-		catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
+		catch(ClassNotFoundException c) {
+			System.out.println(c.getMessage());
 		}
 		
 		do {
 			escolha = menu();
 			switch(escolha) {
-			case 1:
+			
+			// criar ginásio
+			case 1: FuncGinasio.criarGinasio(ginasios);
 			break;
 			
-			case 2: System.out.println(ginasios);
+			// listar ginásios
+			case 2: System.out.println(ginasios); // o toString é dado automaticamente, mas o efeito é de ginasios.toString()
 			break;
 			
-			case 3:
+			// consultar um ginásio específico e dar a opção de visualizar todo o seu conteúdo.
+			case 3: int ginum = FuncGinasio.consultarGinasioNome(ginasios); // consultar o ginasio dado o nome, também dará a opçao de vermos os membros, aulas, staff, etc... desse ginásio em específico.
+					do {
+						escolha2 = menu3(); // mostra o menu a perguntar se o utilizar quer ver as opçoes de Membro, Staff, etc...
+						switch(escolha2) {
+						
+						case 1:  do {
+									escolha3 = menu4(); // mostra o menu com as opções de Membro, Staff, etc...
+									switch(escolha3) {
+									
+									// --------- opções dos membros ------------------
+									case 1: escolha4 = 1;
+											do {
+												escolha4 = menumembro();
+												switch(escolha4) {
+												
+												// ------ criar membro ----------
+												case 1: FuncMembro.criarMembro(ginasios, ginum); // TESTE
+												break;
+												
+												// ------ listar membros ----------
+												case 2: FuncMembro.listarMembro(ginasios, ginum); // TESTE
+												break;
+												
+												// ------ consultar membro dado nome ou nº ou nif ----------
+												case 3: FuncMembro.consultarMembro(ginasios, ginum);
+												break;
+												
+												// ------ alterar membro ----------
+												case 4: FuncMembro.alterarMembro(ginasios, ginum);
+												break;
+												
+												// ------ apagar membro ----------
+												case 5: // função para apagar membro
+												break;
+												
+												case 6:
+												break;
+												
+												default: System.out.println("Opção inválida! Tente novamente");
+												}
+											} while(escolha4 != 6);
+									break;
+									
+									// --------- opções da staff ------------------
+									case 2: escolha4 = 1;
+											do {
+												escolha4 = menustaff();
+											} while(escolha4 != 5);
+									break;
+									
+									// --------- opções das aulas ------------------
+									case 3: escolha4 = 1;
+											do {
+												escolha4 = menuaula();
+											} while(escolha4 != 5);
+									break;
+									
+									// --------- opções das pessoas ------------------
+									case 4: escolha4 = 1;
+											do {
+												escolha4 = 0; // futuro menu pessoa
+											} while(escolha4 != 5);
+									break;
+									
+									case 5: System.out.println("A sair...");
+									break;
+									
+									default: System.out.println("Opção errada! Tente novamente!");
+									}
+									
+							} while(escolha3 != 5);
+						break;
+						
+						case 2: System.out.println("A sair...");
+						break;
+						
+						default: System.out.println("Opção Errada! Tente novamente!");
+						}
+							
+					} while(escolha2 != 2);
 			break;
 			
 			case 4:
@@ -107,6 +215,5 @@ public class GerirGinasio {
 			break;
 			}
 		} while(escolha != 6);
-		
 	}
 }

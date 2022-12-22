@@ -7,10 +7,10 @@ public class Pessoa {
 	private int nif; // nº de identificação fiscal
 	private String profissao; // profissão
 	private LocalDate data_nasc; // data de nascimento
-	private float altura;
-	private float peso;
+	private int altura; // altura em cm
+	private double peso; // peso em kg
 	
-	public Pessoa(String p_nome, String u_nome,int nif, int dia, int mes, int ano, float altura, float peso) {
+	public Pessoa(String p_nome, String u_nome,int nif, int dia, int mes, int ano, int altura, double peso) {
 		this.p_nome = p_nome;
 		this.u_nome = u_nome;
 		this.nif = nif;
@@ -41,11 +41,11 @@ public class Pessoa {
 		return profissao;
 	}
 	
-	public float getAltura() {
+	public int getAltura() {
 		return altura;
 	}
 	
-	public float getPeso() {
+	public double getPeso() {
 		return peso;
 	}
 	
@@ -69,7 +69,7 @@ public class Pessoa {
 		this.profissao = profissao;
 	}
 	
-	public void setAltura(float altura) {
+	public void setAltura(int altura) {
 		this.altura = altura;
 	}
 	

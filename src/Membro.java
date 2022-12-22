@@ -1,6 +1,8 @@
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Membro extends Pessoa{
+public class Membro extends Pessoa implements Serializable{
 	private static int ultimo = 0;
 	private int num_membro;
 	private ArrayList<Aula> aulas;
@@ -29,7 +31,7 @@ public class Membro extends Pessoa{
 	}
 
 	public void setAulas(ArrayList<Aula> aulas) {
-		this.aulas = aulas;
+		this.aulas = (ArrayList<Aula>) aulas.clone();
 	}
 
 	public double getPreco() {
@@ -47,11 +49,19 @@ public class Membro extends Pessoa{
 	public void setQuota_mem(double quota_mem) {
 		this.quota_mem = quota_mem;
 	}
+	
+	public static int getUltimo() {
+		return ultimo;
+	}
 
 	@Override
 	public String toString() {
 		return "Membro [num_membro=" + num_membro + ", aulas=" + aulas + ", preco=" + preco + ", quota_mem=" + quota_mem
 				+ "]";
+	}
+
+	public static void setUltimo(int ult2) {
+		ultimo = ult2;
 	}
 	
 	

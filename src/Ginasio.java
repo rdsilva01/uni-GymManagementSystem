@@ -1,6 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ginasio {
+public class Ginasio implements Serializable{
+	private static int ultimo = 0;
+	// private static ArrayList<Membro>[] lista = new ArrayList<Membro>[ultimo];
+	private int num;
 	private String nome;
 	private ArrayList<Double> precos;
 	private ArrayList<Double> quotas;
@@ -10,6 +14,7 @@ public class Ginasio {
 	private ArrayList<Staff> staff;
 	
 	public Ginasio(String nome) {
+		ultimo++;
 		this.nome = nome;
 		precos = new ArrayList<Double>();
 		quotas = new ArrayList<Double>();
@@ -17,6 +22,8 @@ public class Ginasio {
 		membros = new ArrayList<Membro>();
 		totalpax = new ArrayList<Pessoa>();
 		staff = new ArrayList<Staff>();
+		num = ultimo;
+		// 	lista[ultimo-1] = membros;
 	}
 
 	public String getNome() {
@@ -58,6 +65,10 @@ public class Ginasio {
 	public void setMembros(ArrayList<Membro> membros) {
 		this.membros = membros;
 	}
+	
+	public void addMembros(Membro membro) {
+		membros.add(membro);	
+	}
 
 	public ArrayList<Pessoa> getTotalpax() {
 		return totalpax;
@@ -65,6 +76,10 @@ public class Ginasio {
 
 	public void setTotalpax(ArrayList<Pessoa> totalpax) {
 		this.totalpax = totalpax;
+	}
+	
+	public void addTotalpax(Pessoa pax) {
+		totalpax.add(pax);
 	}
 
 	public ArrayList<Staff> getStaff() {
@@ -74,12 +89,30 @@ public class Ginasio {
 	public void setStaff(ArrayList<Staff> staff) {
 		this.staff = staff;
 	}
+	
+	public static int getUltimo() {
+		return ultimo;
+	}
+	
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
 
 	@Override
 	public String toString() {
-		return "Ginasio [nome=" + nome + ", precos=" + precos + ", quotas=" + quotas + ", aulas=" + aulas + ", membros="
-				+ membros + ", totalpax=" + totalpax + ", staff=" + staff + "]";
+		return "Ginasio [num=" + num + ", nome=" + nome + ", precos=" + precos + ", quotas=" + quotas + ", aulas="
+				+ aulas + ", membros=" + membros + ", totalpax=" + totalpax + ", staff=" + staff + "]";
 	}
+
+	public static void setUltimo(int ult) {
+		ultimo = ult;
+	}
+
+	
 	
 	
 	
