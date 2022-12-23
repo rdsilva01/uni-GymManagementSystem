@@ -7,6 +7,12 @@ import myinputs.Ler;
 
 public class GerirGinasio {
 	
+	//+-------------------------------------------------------------+
+	//| * * * * * * * * * * * * MENUS * * * * * * * * * * * * * * * |
+	//| * * * * * * * * * * * * MENUS * * * * * * * * * * * * * * * |
+	//+-------------------------------------------------------------+ 
+	
+	// menu4
 	public static int menu4() {
 		int escolh4;
 		System.out.println("Qual das seguintes opções deseja ver?");
@@ -19,6 +25,7 @@ public class GerirGinasio {
 		return escolh4;
 	}
 	
+	// menu3
 	public static int menu3() {
 		int escolh3;
 		System.out.println("Deseja ver Membros, Staff, Aulas, etc?");
@@ -28,7 +35,7 @@ public class GerirGinasio {
 		return escolh3;
 	}
 	
-	// menu geral
+	// menu para a classe Ginasio (principal)
 	public static int menu() {
 		int opcao;
 		System.out.println("1 - Criar ginásio");
@@ -60,12 +67,11 @@ public class GerirGinasio {
 	public static int menustaff() {
 		int opcaostaff;
 		System.out.println("1 - Criar STAFF");
-		System.out.println("2 - Consultar STAFF");
-		System.out.println("3 - Consultar STAFF, dado o nome");
-		System.out.println("4 - Consultar STAFF, dado o cargo");
-		System.out.println("5 - Alterar STAFF");
-		System.out.println("6 - Apagar STAFF");
-		System.out.println("7 - Terminar");
+		System.out.println("2 - Listar STAFF");
+		System.out.println("3 - Consultar STAFF, dado o nome, NIF, cargo ou número");
+		System.out.println("4 - Alterar STAFF");
+		System.out.println("5 - Apagar STAFF");
+		System.out.println("6 - Terminar");
 		System.out.println("Qual a sua opção? ");
 		opcaostaff = Ler.umInt();
 		return opcaostaff;
@@ -85,6 +91,27 @@ public class GerirGinasio {
 		opcaoaula = Ler.umInt();
 		return opcaoaula;
 	}
+	
+	// menu para a classe Pessoa
+	public static int menupessoa() {
+		int opcaoaula;
+		System.out.println("1 - Criar aula");
+		System.out.println("2 - Consultar aulas");
+		System.out.println("3 - Consultar aula, dado o nome");
+		System.out.println("4 - Consultar aula, dando a hora");
+		System.out.println("5 - Alterar aula");
+		System.out.println("6 - Apagar aula");
+		System.out.println("7 - Terminar");
+		System.out.println("Qual a sua opção? ");
+		opcaoaula = Ler.umInt();
+		return opcaoaula;
+	}
+	
+	
+		//+--------------------------------------------------------------+
+		//| * * * * * * * * * * * * * MAIN * * * * * * * * * * * * * * * |
+		//| * * * * * * * * * * * * * MAIN * * * * * * * * * * * * * * * |
+		//+--------------------------------------------------------------+ 
 	
 	public static void main (String[] args) {
 		int escolha, escolha2, escolha3, escolha4;
@@ -112,15 +139,18 @@ public class GerirGinasio {
 			escolha = menu();
 			switch(escolha) {
 			
-			// criar ginásio
+			// ************************** criar ginásio ****************************
+			// *********************************************************************
 			case 1: FuncGinasio.criarGinasio(ginasios);
 			break;
 			
-			// listar ginásios
+			// ************************** listar ginásios **************************
+			// *********************************************************************
 			case 2: System.out.println(ginasios); // o toString é dado automaticamente, mas o efeito é de ginasios.toString()
 			break;
 			
-			// consultar um ginásio específico e dar a opção de visualizar todo o seu conteúdo.
+			// ************************** consultar 1 ginásio **********************
+			// *********************************************************************
 			case 3: int ginum = FuncGinasio.consultarGinasioNome(ginasios); // consultar o ginasio dado o nome, também dará a opçao de vermos os membros, aulas, staff, etc... desse ginásio em específico.
 					escolha2 = menu3();
 					do {
@@ -169,7 +199,34 @@ public class GerirGinasio {
 									case 2: escolha4 = 1;
 											do {
 												escolha4 = menustaff();
-											} while(escolha4 != 5);
+												switch(escolha4) {
+												
+												// ------ criar staff ----------
+												case 1: FuncStaff.criarStaff(ginasios, ginum);
+												break;
+												
+												// ------ listar staff ----------
+												case 2:	
+												break;
+												
+												// ------ consultar staff, dado nome, etc... ----------
+												case 3:	FuncStaff.consultarStaff(ginasios, ginum);
+												break;
+												
+												// ------ alterar staff ----------
+												case 4:	FuncStaff.alterarStaff(ginasios, ginum);
+												break;
+												
+												// ------ apagar staff ----------
+												case 5:
+												break;
+												
+												// ------ sair ---------
+												case 6:
+												break;
+												
+												}
+											} while(escolha4 != 6);
 									break;
 									
 									// --------- opções das aulas ------------------
@@ -187,6 +244,7 @@ public class GerirGinasio {
 									break;
 									
 									case 5: System.out.println("A sair...");
+											escolha2 = 2;
 									break;
 									
 									default: System.out.println("Opção errada! Tente novamente!");
@@ -204,12 +262,17 @@ public class GerirGinasio {
 					} while(escolha2 != 2);
 			break;
 			
+			// ************************** alterar ginásio **************************
+			// *********************************************************************
 			case 4:
 			break;
 			
+			// ************************** apagar ginásio ***************************
+			// *********************************************************************
 			case 5:	
 			break;
 			
+			// terminar
 			case 6:	
 			break;
 			}
