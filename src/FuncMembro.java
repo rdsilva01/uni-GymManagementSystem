@@ -22,6 +22,11 @@ public class FuncMembro {
 				return;
 			}
 		}
+		char sexo = 'A';
+		while(sexo != 'M' && sexo != 'm' && sexo != 'F' && sexo != 'f') { 
+			System.out.println("Insira o seu sexo (M ou F)");
+			sexo = Ler.umChar();
+		}
 		
 		System.out.println("Insira a sua data de nascimento ");
 		System.out.println("Dia: ");
@@ -36,48 +41,27 @@ public class FuncMembro {
 		System.out.println("Insira o peso (em quilogramas): ");
 		double peso = Ler.umDouble();
 		
-		Pessoa pax = new Pessoa(p_nome, u_nome, nif, dia, mes, ano, altura, peso);
+		Pessoa pax = new Pessoa(p_nome, u_nome, nif, dia, mes, ano, altura, peso, sexo);
 		Membro mem = new Membro(pax);
 		
+		mem.setNum_membro(ginasio.get(num).getMembros().size() + 1);
+		
+		for(int j = 0; j < ginasio.get(num).getMembros().size(); j++) {
+			if(mem.getNum_membro() == ginasio.get(num).getMembros().get(j).getNum_membro()) {
+				mem.setNum_membro(mem.getNum_membro() + 1);
+			}
+		}
 		ginasio.get(num).addMembros(mem);
 		
-		/*
-		// ESCRITA PARA O FICHEIRO DOS MEMBROS
 		try {
-			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/membros.md"));
-			
-			//escrever o objeto membros no ficheiro membros.md
-			os.writeInt(Membro.getUltimo());
-			os.writeObject(ginasio);
-			os.flush();
-		}
-		catch(IOException e) {
-			System.out.println(e.getMessage());
-		}
-		
-		// ESCRITA PARA O FICHEIRO DAS PESSOAS
-		try {
-			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/pessoas.md"));
-			
-			// escrever o objeto pessos no ficheiro pessoas.md
-			os.writeObject(pessoas);
-			os.flush();
-		}
-		catch(IOException e) {
-			System.out.println(e.getMessage());
-		}
-		*/
-		
-		
-		try {
-			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
-			
-			//escrever o objeto membros no ficheiro membros.md
-			os.writeInt(Membro.getUltimo());
-			os.writeObject(ginasio);
-			os.flush();
-		}
-		catch(IOException e) {
+		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+
+		      // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
+		      os.writeInt(Ginasio.getUltimo());
+		      os.writeObject(ginasio);
+		      os.flush();
+		} 
+		catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -171,10 +155,10 @@ public class FuncMembro {
 		int numm = Ler.umInt();
 		
 		for(int i = 0; i < ginasio.get(num).getMembros().size(); i++) {
-			if(ginasio.get(num).getMembros().get(i).getNum_membro() == num) {
+			if(ginasio.get(num).getMembros().get(i).getNum_membro() == numm) {
 				int escolha = 1;
 				do {
-					System.out.println("O que pretende alterar:\n1 - Nome\n2 - NIF\n3 - Data de Nascimento\n4 - Altura\n5 - Peso\n6 - Sair");
+					System.out.println("O que pretende alterar:\n1 - Nome\n2 - NIF\n3 - Data de Nascimento\n4 - Altura\n5 - Peso\n6 - Sexo\n7 - Sair");
 					escolha = Ler.umInt();
 					switch(escolha) {
 					
@@ -220,12 +204,9 @@ public class FuncMembro {
 										escnif = 0;
 									}
 								}
-								
 								ginasio.get(num).getMembros().get(i).setNif(nif); // set do novo nif
-			
-							}
-							
-							
+								escnif = 0;	
+							}	
 					break;
 					
 					// --------------- mudar a idade ------------------
@@ -242,38 +223,103 @@ public class FuncMembro {
 						
 								case 2: System.out.println("Insira o novo mês (1-12): ");
 										int mes = Ler.umInt();
-								
-										ginasio.get(num).getMembros().get(i).setDataNasc(ginasio.get(num).getMembros().get(i).getDataNasc().getYear(), mes, ginasio.get(num).getMembros().get(i).getDataNasc().getDayOfMonth());
+										while(mes >= 1 && mes <= 12) {
+											ginasio.get(num).getMembros().get(i).setDataNasc(ginasio.get(num).getMembros().get(i).getDataNasc().getYear(), mes, ginasio.get(num).getMembros().get(i).getDataNasc().getDayOfMonth());
+										}
 								break;
 						
-								case 3:	System.out.println("Insira o novo mês (1-12): ");
+								case 3:	System.out.println("Insira o novo ano (1900 - 2022): ");
 										int ano = Ler.umInt();
-								
-										ginasio.get(num).getMembros().get(i).setDataNasc(ano, ginasio.get(num).getMembros().get(i).getDataNasc().getMonthValue(), ginasio.get(num).getMembros().get(i).getDataNasc().getDayOfMonth());
+										while(ano >= 1900 && ano <= 2022) {
+											ginasio.get(num).getMembros().get(i).setDataNasc(ano, ginasio.get(num).getMembros().get(i).getDataNasc().getMonthValue(), ginasio.get(num).getMembros().get(i).getDataNasc().getDayOfMonth());
+										}
 								break;
 								
+								case 4:
+								break;
+								
+								default: System.out.println("Opção inválida! Tente novamente");
 								}
 							} while(escidade!= 4);
 					break;
+					
+					// --------------- mudar a altura ------------------
+					case 4:
+					break;
+					
+					// --------------- mudar o peso --------------------
+					case 5:
+					break;
+					
+					// --------------- mudar o sexo --------------------
+					case 6:
+					break;
+					
+					
+					case 7:
+					break;
+					
+					default: System.out.println("Opção inválida! Tente novamente");
 					}
 					
-				} while(escolha != 6);
+				} while(escolha != 7);
 			}
 		}
 		
-		// ESCRITA PARA O FICHEIRO DOS MEMBROS
+		// ESCRITA PARA O FICHEIRO DOS GINÁSIOS
 		try {
-			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
-					
-			//escrever o objeto membros no ficheiro membros.md
-			os.writeInt(Membro.getUltimo());
-			os.writeObject(ginasio);
-			os.flush();
-		}
-		catch(IOException e) {
+		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+
+		      // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
+		      os.writeInt(Ginasio.getUltimo());
+		      os.writeObject(ginasio);
+		      os.flush();
+		} 
+		catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-				
-
 	}
+	
+	/* ------------------- APAGAR MEMBRO --------------------------------------- *
+	 * ------------------------------------------------------------------------- */
+	public static void apagarMembro(ArrayList<Ginasio> ginasio, int num) {
+		int controlo = 1;
+		while(controlo != 3) {
+			System.out.println("Insira o número do membro que pretende alterar: ");
+			int numem = Ler.umInt();
+			
+			for(int i = 0; i < ginasio.get(num).getMembros().size(); i++) {
+				if(numem == ginasio.get(num).getMembros().get(i).getNum_membro()) {
+					int controlo2 = 1;
+					do {
+						System.out.println("Deseja remover o seguinte membro? \n" + ginasio.get(num).getMembros().get(i).toString() + "\n 1 - Sim\n 2- Não");
+						controlo2 = Ler.umInt();
+						if(controlo2 == 1) { // se 1 - Sim, remove o membro e sai
+							ginasio.get(num).getMembros().remove(i);
+							System.out.println("Membro removido com sucesso!");
+							return;	
+						}
+						else if(controlo2 == 2) { // se 2 - Não, repete!
+							controlo2 = 2;
+						}
+					} while(controlo2 != 2);
+				}
+			}
+			System.out.println("Não existe nenhum membro com esse número");
+		}
+		
+		// ESCRITA PARA O FICHEIRO DOS GINÁSIOS
+			try {
+				 ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+
+				 // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
+				 os.writeInt(Ginasio.getUltimo());
+				 os.writeObject(ginasio);
+				 os.flush();
+			} 
+			catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+	}
+	
 }

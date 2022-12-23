@@ -7,31 +7,27 @@ public class FuncGinasio {
 	
 	/* ------------------- CRIAR GINÁSIO --------------------------------------- *
 	 * ------------------------------------------------------------------------- */
-	public static void criarGinasio(ArrayList<Ginasio> ginasios) {
+	public static void criarGinasio(ArrayList<Ginasio> ginasio) {
 		System.out.println("Insira o nome do Ginásio: ");
-		String nome = Ler.umaString();
+		String nome = Ler.umaString(); 
 		
 		// não podem existir nomes iguais
-		for (int i = 0; i < ginasios.size(); i++) {
-			if (ginasios.get(i).getNome().equals(nome)) {
+		for (int i = 0; i < ginasio.size(); i++) {
+			if (ginasio.get(i).getNome().equals(nome)) {
 				System.out.println("Um ginásio com esse nome já existe!");
 				return;
 			}
 		}
 		
-		/* obter os parâmetros para criar o objeto Ginásio
-		System.out.println("Qual o preço base?");
-		double preco = Ler.umDouble(); */
-		
 		Ginasio g = new Ginasio(nome);
-		ginasios.add(g);
+		ginasio.add(g);
 		
 		try {
 		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
 
 		      // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
 		      os.writeInt(Ginasio.getUltimo());
-		      os.writeObject(ginasios);
+		      os.writeObject(ginasio);
 		      os.flush();
 		} 
 		catch (IOException e) {
@@ -104,8 +100,13 @@ public class FuncGinasio {
 		}
 	}
 	
-	/*public static void getUltimoMembro(ArrayList<Ginasio>) {
+	/* ------------------- APAGAR GINÁSIO -------------------------------------- *
+	 * ------------------------------------------------------------------------- */
+	public static void apagarGinásio(ArrayList<Ginasio> ginasio) {
+		System.out.println("Insira o nº do Ginásio que pretende apagar: ");
+		int num = Ler.umInt();
 		
-	} */
+	}
+	
 	
 }

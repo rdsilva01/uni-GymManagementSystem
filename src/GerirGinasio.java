@@ -98,10 +98,8 @@ public class GerirGinasio {
 			ObjectInputStream is = new ObjectInputStream( new FileInputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
 			int ult = is.readInt();
 			Ginasio.setUltimo(ult);
-			/* for(int i = 0; i < ult; i++) {
-				ginasios.get(i).getMembros().get(0).getUltimo();	
-			} */
 			ginasios = (ArrayList<Ginasio>) is.readObject();
+			is.close();
 		}
 		catch(IOException e) {
 			System.out.println(e.getMessage());
@@ -124,8 +122,9 @@ public class GerirGinasio {
 			
 			// consultar um ginásio específico e dar a opção de visualizar todo o seu conteúdo.
 			case 3: int ginum = FuncGinasio.consultarGinasioNome(ginasios); // consultar o ginasio dado o nome, também dará a opçao de vermos os membros, aulas, staff, etc... desse ginásio em específico.
+					escolha2 = menu3();
 					do {
-						escolha2 = menu3(); // mostra o menu a perguntar se o utilizar quer ver as opçoes de Membro, Staff, etc...
+						//escolha2 = menu3(); // mostra o menu a perguntar se o utilizar quer ver as opçoes de Membro, Staff, etc...
 						switch(escolha2) {
 						
 						case 1:  do {
@@ -155,7 +154,7 @@ public class GerirGinasio {
 												break;
 												
 												// ------ apagar membro ----------
-												case 5: // função para apagar membro
+												case 5: FuncMembro.apagarMembro(ginasios, ginum);
 												break;
 												
 												case 6:

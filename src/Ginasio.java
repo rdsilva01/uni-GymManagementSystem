@@ -2,8 +2,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Ginasio implements Serializable{
-	private static int ultimo = 0;
-	// private static ArrayList<Membro>[] lista = new ArrayList<Membro>[ultimo];
+	private static int ultimo = 0; // static do valor do nº do ginásio
 	private int num;
 	private String nome;
 	private ArrayList<Double> precos;
@@ -23,7 +22,6 @@ public class Ginasio implements Serializable{
 		totalpax = new ArrayList<Pessoa>();
 		staff = new ArrayList<Staff>();
 		num = ultimo;
-		// 	lista[ultimo-1] = membros;
 	}
 
 	public String getNome() {
@@ -90,6 +88,10 @@ public class Ginasio implements Serializable{
 		this.staff = staff;
 	}
 	
+	public void addStaff(Staff staffs) {
+		staff.add(staffs);
+	}
+	
 	public static int getUltimo() {
 		return ultimo;
 	}
@@ -104,17 +106,21 @@ public class Ginasio implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Ginasio [num=" + num + ", nome=" + nome + ", precos=" + precos + ", quotas=" + quotas + ", aulas="
-				+ aulas + ", membros=" + membros + ", totalpax=" + totalpax + ", staff=" + staff + "]";
+		String memstring = "";
+		
+		for(int i = 0; i < membros.size(); i++) {
+			memstring += membros.get(i).toString();
+		}
+		
+		return "nº[" + num + "] - Nome: " + nome + "\n Preços: " + precos + "; Quotas: " + quotas + "\nAulas: "
+				+ aulas + "\nMembros\n" + memstring + "\nStaff\n    " + staff + "\nTotal de Pessoas [" + totalpax + "]\n";
 	}
 
 	public static void setUltimo(int ult) {
 		ultimo = ult;
 	}
-
 	
+	// equals
 	
-	
-	
-	
+	// clone
 }

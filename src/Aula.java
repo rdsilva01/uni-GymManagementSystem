@@ -48,5 +48,8 @@ public class Aula {
 		return "Aula [horario= " + hora + ": " + minuto + ", nome=" + nome + ", numpaxmax=" + numpaxmax + "]";
 	}
 	
+	// equals
 	
+	// clone
+
 }

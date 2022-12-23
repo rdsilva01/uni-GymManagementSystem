@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Pessoa {
+public class Pessoa implements Serializable{
 	private String p_nome; // primeiro nome
 	private String u_nome; // último nome
 	private int nif; // nº de identificação fiscal
@@ -9,8 +10,9 @@ public class Pessoa {
 	private LocalDate data_nasc; // data de nascimento
 	private int altura; // altura em cm
 	private double peso; // peso em kg
+	private char sexo;
 	
-	public Pessoa(String p_nome, String u_nome,int nif, int dia, int mes, int ano, int altura, double peso) {
+	public Pessoa(String p_nome, String u_nome,int nif, int dia, int mes, int ano, int altura, double peso, char sexo) {
 		this.p_nome = p_nome;
 		this.u_nome = u_nome;
 		this.nif = nif;
@@ -18,6 +20,7 @@ public class Pessoa {
 		data_nasc = LocalDate.of(ano, mes, dia);
 		this.altura = altura;
 		this.peso = peso;
+		this.sexo = sexo;
 	}
 	
 	public String getP_nome() {
@@ -77,10 +80,18 @@ public class Pessoa {
 		this.peso = peso;
 	}
 	
+	public char getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(char sexo) {
+		this.sexo = sexo;
+	}
+
 	public String toString() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		
-		return "Primeiro nome: " + p_nome + "; Último nome: " + u_nome + "; NIF: " + nif + "; Profissão: " + profissao + "; Data de nascimento: " + (data_nasc.format(formatter)) + "; Altura: " + altura + "; Peso: " + peso;
+		return "Primeiro nome: " + p_nome + "\nÚltimo nome: " + u_nome + "\nNIF: " + nif + "\nProfissão: " + profissao + "\nData de nascimento: " + (data_nasc.format(formatter)) + "\nAltura: " + altura + "\nPeso: " + peso;
 	}
 	
 	// equals
