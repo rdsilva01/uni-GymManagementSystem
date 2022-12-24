@@ -57,6 +57,7 @@ public class FuncStaff {
 		}
 		
 		ginasio.get(num).addStaff(mem);
+		ginasio.get(num).addPax(mem);
 		
 		try {
 		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
@@ -273,6 +274,7 @@ public class FuncStaff {
 				} while(escolha != 9);
 			}
 		}
+		
 		
 		// ESCRITA PARA O FICHEIRO DOS GINÁSIOS
 		try {

@@ -47,6 +47,14 @@ public class Membro extends Pessoa implements Serializable{
 	public void setQuota_mem(double quota_mem) {
 		this.quota_mem = quota_mem;
 	}
+	
+	public void addAula(Aula a) {
+		aulas.add(a);
+	}
+	
+	public void removeAula(Aula a) {
+		aulas.remove(a);
+	}
 
 	@Override
 	public String toString() {

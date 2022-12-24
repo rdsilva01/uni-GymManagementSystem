@@ -84,9 +84,10 @@ public class GerirGinasio {
 		System.out.println("2 - Consultar aulas");
 		System.out.println("3 - Consultar aula, dado o nome");
 		System.out.println("4 - Consultar aula, dando a hora");
-		System.out.println("5 - Alterar aula");
-		System.out.println("6 - Apagar aula");
-		System.out.println("7 - Terminar");
+		System.out.println("5 - Inscrever numa aula");
+		System.out.println("6 - Alterar aula");
+		System.out.println("7 - Apagar aula");
+		System.out.println("8 - Terminar");
 		System.out.println("Qual a sua opção? ");
 		opcaoaula = Ler.umInt();
 		return opcaoaula;
@@ -95,8 +96,8 @@ public class GerirGinasio {
 	// menu para a classe Pessoa
 	public static int menupessoa() {
 		int opcaoaula;
-		System.out.println("1 - Criar aula");
-		System.out.println("2 - Consultar aulas");
+		System.out.println("1 - Ver aniversários");
+		System.out.println("2 - Ver total de pessoas");
 		System.out.println("3 - Consultar aula, dado o nome");
 		System.out.println("4 - Consultar aula, dando a hora");
 		System.out.println("5 - Alterar aula");
@@ -134,6 +135,13 @@ public class GerirGinasio {
 		catch(ClassNotFoundException c) {
 			System.out.println(c.getMessage());
 		}
+	
+		System.out.println(" 				.--.");
+		System.out.println("				|__| .-------.");
+		System.out.println("+-----+ +-------+ +-----+	|=.| |.-----.|");
+		System.out.println("|G Y M| |T O O L| |P R O|	|--| || GTP ||");
+		System.out.println("+-----+ +-------+ +-----+	|  | |'-----'|");
+		System.out.println("				|__|~')_____('");
 		
 		do {
 			escolha = menu();
@@ -146,15 +154,14 @@ public class GerirGinasio {
 			
 			// ************************** listar ginásios **************************
 			// *********************************************************************
-			case 2: System.out.println(ginasios); // o toString é dado automaticamente, mas o efeito é de ginasios.toString()
+			case 2: FuncGinasio.listarGinasio(ginasios); // o toString é dado automaticamente, mas o efeito é de ginasios.toString()
 			break;
 			
 			// ************************** consultar 1 ginásio **********************
 			// *********************************************************************
 			case 3: int ginum = FuncGinasio.consultarGinasioNome(ginasios); // consultar o ginasio dado o nome, também dará a opçao de vermos os membros, aulas, staff, etc... desse ginásio em específico.
-					escolha2 = menu3();
+					escolha2 = menu3(); // mostra o menu a perguntar se o utilizar quer ver as opçoes de Membro, Staff, etc...
 					do {
-						//escolha2 = menu3(); // mostra o menu a perguntar se o utilizar quer ver as opçoes de Membro, Staff, etc...
 						switch(escolha2) {
 						
 						case 1:  do {
@@ -187,6 +194,7 @@ public class GerirGinasio {
 												case 5: FuncMembro.apagarMembro(ginasios, ginum);
 												break;
 												
+												// ------ sair ----------
 												case 6:
 												break;
 												
@@ -233,7 +241,37 @@ public class GerirGinasio {
 									case 3: escolha4 = 1;
 											do {
 												escolha4 = menuaula();
-											} while(escolha4 != 5);
+												switch(escolha4) {
+												
+												// ------ criar aula ----------
+												case 1: FuncAula.criarAula(ginasios, ginum);
+												break;
+												
+												// ------ listar aula ----------
+												case 2: FuncAula.listarAula(ginasios, ginum);
+												break;
+												
+												case 3:
+												break;
+												
+												case 4:
+												break;
+												
+												case 5:
+												break;
+												
+												case 6:
+												break;
+												
+												// ------ inscrever membro ----------
+												case 7: FuncAula.inscreverAula(ginasios, ginum);
+												break;
+												
+												// ------ sair ----------
+												case 8:
+												break;
+												}
+											} while(escolha4 != 8);
 									break;
 									
 									// --------- opções das pessoas ------------------
@@ -243,6 +281,7 @@ public class GerirGinasio {
 											} while(escolha4 != 5);
 									break;
 									
+									// --------- sair ------------------
 									case 5: System.out.println("A sair...");
 											escolha2 = 2;
 									break;
@@ -253,6 +292,7 @@ public class GerirGinasio {
 							} while(escolha3 != 5);
 						break;
 						
+						// --------- sair ------------------
 						case 2: System.out.println("A sair...");
 						break;
 						

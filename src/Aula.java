@@ -1,14 +1,24 @@
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Aula {
+public class Aula implements Serializable{
 	private int hora;
 	private int minuto;
 	private String nome;
-	private String numpaxmax;
+	private int numpaxmax;
+	private ArrayList<Membro> inscritos;
+	private String dds;
+	private int codigo;
 	
-	public Aula(int hora, int minuto, String nome) {
+	public Aula(int codigo, int hora, int minuto, String nome, String dds, int numpaxmax) {
 		this.hora = hora;
 		this.minuto = minuto;
 		this.nome = nome;
+		this.dds = dds;
+		inscritos = new ArrayList<Membro>();
+		this.numpaxmax = numpaxmax;
+		this.codigo = codigo;
+		
 	}
 
 	public int getHora() {
@@ -35,18 +45,51 @@ public class Aula {
 		this.nome = nome;
 	}
 
-	public String getNumpaxmax() {
+	public int getNumpaxmax() {
 		return numpaxmax;
 	}
 
-	public void setNumpaxmax(String numpaxmax) {
+	public void setNumpaxmax(int numpaxmax) {
 		this.numpaxmax = numpaxmax;
+	}
+
+	public ArrayList<Membro> getInscritos() {
+		return inscritos;
+	}
+
+	public void setInscritos(ArrayList<Membro> inscritos) {
+		this.inscritos = inscritos;
+	}
+	
+	public void addInscritos(Membro mem) {
+		inscritos.add(mem);
+	}
+	
+	public void removeInscritos(Membro mem) {
+		inscritos.remove(mem);
 	}
 
 	@Override
 	public String toString() {
-		return "Aula [horario= " + hora + ": " + minuto + ", nome=" + nome + ", numpaxmax=" + numpaxmax + "]";
+		return "CÓDIGO [" + codigo + "] - Aula de " + nome + "\nHorário: " + dds + " às " + hora + "h" + minuto + "min\nVagas disponíveis: [" + (numpaxmax - inscritos.size()) + "]";
 	}
+
+	public String getDds() {
+		return dds;
+	}
+
+	public void setDds(String dds) {
+		this.dds = dds;
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+	
 	
 	// equals
 	

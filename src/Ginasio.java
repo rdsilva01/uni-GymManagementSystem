@@ -107,17 +107,37 @@ public class Ginasio implements Serializable{
 	@Override
 	public String toString() {
 		String memstring = "";
+		String staffstring = "";
+		String aulastring = "";
 		
 		for(int i = 0; i < membros.size(); i++) {
 			memstring += membros.get(i).toString();
 		}
 		
-		return "nº[" + num + "] - Nome: " + nome + "\n Preços: " + precos + "; Quotas: " + quotas + "\nAulas: "
-				+ aulas + "\nMembros\n" + memstring + "\nStaff\n    " + staff + "\nTotal de Pessoas [" + totalpax + "]\n";
+		for(int j = 0; j < staff.size(); j++) {
+			staffstring += staff.get(j).toString();
+		}
+		
+		for(int k = 0; k < aulas.size(); k++) {
+			aulastring += aulas.get(k).toString();
+		}
+		
+		
+		
+		return "###################################\nnº[" + num + "] - Nome: " + nome + "\nPreços: " + precos + "; Quotas: " + quotas + "\nAulas:\n"
+				+ aulastring + "\n\nMembros:\n" + memstring + "\nStaff:\n" + staffstring + "\nTotal de Pessoas [" + (membros.size()+staff.size()) + "]\n###################################\n";
 	}
 
 	public static void setUltimo(int ult) {
 		ultimo = ult;
+	}
+
+	public void addPax(Staff mem) {
+		totalpax.add(mem);
+	}
+	
+	public void addAula(Aula a) {
+		aulas.add(a);
 	}
 	
 	// equals
