@@ -1,2 +1,2 @@
-SRC directory
-Contém os ficheiros .java
+- SRC directory
+- Contém os ficheiros .java
