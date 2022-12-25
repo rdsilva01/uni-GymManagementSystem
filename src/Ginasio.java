@@ -124,9 +124,9 @@ public class Ginasio implements Serializable{
 		
 		
 		
-		return "###################################\nnº[" + num + "] - Nome: " + nome + "\nPreços: " + precos + "; Quotas: " + quotas + "\nAulas:\n"
-				+ aulastring + "\n\nMembros:\n" + memstring + "\nStaff:\n" + staffstring + "\nTotal de Pessoas [" + (membros.size()+staff.size()) + "]\n###################################\n";
-	}
+		return "#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#\nnº[" + num + "] - Nome: " + nome + "\nPreços: " + precos + "; Quotas: " + quotas + "\nAulas:\n"
+				+ aulastring + "\n\n+---------------------------------+\n| Membros:\n+---------------------------------+\n" + memstring + "+---------------------------------+\nStaff:\n" + staffstring + "\nTotal de Pessoas [" + (membros.size()+staff.size()) + "]\n###################################\n";
+	}									
 
 	public static void setUltimo(int ult) {
 		ultimo = ult;

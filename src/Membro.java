@@ -58,7 +58,7 @@ public class Membro extends Pessoa implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Nº[" + num_membro + "]\n" + super.toString() + "\nAulas: " + aulas + "\nPreço: " + preco + "\nQuota:" + quota_mem +"\n\n";
+		return "Nº[" + num_membro + "]\n" + super.toString() + "\nAulas: " + aulas + "\nPreço: " + preco + " €\nQuota:" + quota_mem +" €\n\n";
 	}
 	
 	// equals

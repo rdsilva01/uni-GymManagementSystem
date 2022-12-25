@@ -77,7 +77,7 @@ public class FuncStaff {
 	public static void consultarStaff(ArrayList<Ginasio> ginasio, int num) {
 		int escolha = 1;
 		do {
-			System.out.println("Deseja consultar dado:\n1 - Nome\n2 - NIF\n3 - Sair");
+			System.out.println("Deseja consultar dado:\n1 - Nome\n2 - Número de STAFF\n3 - NIF\n4 - Sair");
 			escolha = Ler.umInt();
 			switch(escolha) {
 			
@@ -96,15 +96,16 @@ public class FuncStaff {
 					}
 					
 					if(totalnome.equals("")) {
-						System.out.println("Não existe nenhum membro registado com esse nome!");
+						System.out.println("Não existe nenhum STAFF registado com esse nome!");
 					}
 					else {
 						System.out.println(totalnome);
+						escolha = 4;
 					}
 			break;
 			
 			// dado o número de membro
-			case 2: System.out.println("Insira o número de Staff: ");
+			case 2: System.out.println("Insira o número de STAFF: ");
 					String totalnum = "";
 					int numm = Ler.umInt();
 					
@@ -115,10 +116,11 @@ public class FuncStaff {
 					}
 					
 					if(totalnum.equals("")) {
-						System.out.println("Não existe nenhum Staff registado com esse número!");
+						System.out.println("Não existe nenhum STAFF registado com esse número!");
 					}
 					else {
 						System.out.println(totalnum);
+						escolha = 4;
 					}
 			break;
 			
@@ -134,10 +136,11 @@ public class FuncStaff {
 					}
 					
 					if(totalnif.equals("")) {
-						System.out.println("Não existe nenhum Staff registado com esse NIF!");
+						System.out.println("Não existe nenhum STAFF registado com esse NIF!");
 					}
 					else {
 						System.out.println(totalnif);
+						escolha = 4;
 					}
 			break;
 			}
@@ -146,7 +149,45 @@ public class FuncStaff {
 	
 	/* ------------------- APAGAR STAFF ---------------------------------------- *
 	 * ------------------------------------------------------------------------- */
-	
+	public static void apagarStaff(ArrayList<Ginasio> ginasio, int num) {
+		int controlo = 1;
+		while(controlo != 3) {
+			System.out.println("Insira o número do STAFF que pretende alterar: ");
+			int numem = Ler.umInt();
+			
+			for(int i = 0; i < ginasio.get(num).getStaff().size(); i++) {
+				if(numem == ginasio.get(num).getStaff().get(i).getNum_staff()) {
+					int controlo2 = 1;
+					do {
+						System.out.println("Deseja remover o seguinte STAFF? \n" + ginasio.get(num).getStaff().get(i).toString() + "\n 1 - Sim\n 2- Não");
+						controlo2 = Ler.umInt();
+						if(controlo2 == 1) { // se 1 - Sim, remove o membro e sai
+							ginasio.get(num).getStaff().remove(i);
+							System.out.println("STAFF removido com sucesso!");
+							return;	
+						}
+						else if(controlo2 == 2) { // se 2 - Não, repete!
+							controlo2 = 2;
+						}
+					} while(controlo2 != 2);
+				}
+			}
+			System.out.println("Não existe nenhum STAFF com esse número");
+		}
+		
+		// ESCRITA PARA O FICHEIRO DOS GINÁSIOS
+			try {
+				 ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+
+				 // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
+				 os.writeInt(Ginasio.getUltimo());
+				 os.writeObject(ginasio);
+				 os.flush();
+			} 
+			catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+	}
 	
 	/* ------------------- ALTERAR STAFF --------------------------------------- *
 	 * ------------------------------------------------------------------------- */
@@ -289,4 +330,16 @@ public class FuncStaff {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	/* ------------------- LISTAR STAFF ---------------------------------------- *
+	 * ------------------------------------------------------------------------- */
+	public static void listarStaff(ArrayList<Ginasio> ginasio, int num) {
+		String liststaff = "";
+		for(int i = 0; i < ginasio.get(num).getStaff().size(); i++) {
+			liststaff += ginasio.get(num).getStaff().get(i).toString() + "\n+---------------------------------+\n";
+		}
+		
+		System.out.println(liststaff);
+	}
+	
 }

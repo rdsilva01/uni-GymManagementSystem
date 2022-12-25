@@ -79,6 +79,7 @@ public class FuncMembro {
 	/* ------------------- CONSULTAR MEMBRO -------------------------------------- *
 	 * --------------------------------------------------------------------------- */
 	public static void consultarMembro(ArrayList<Ginasio> ginasio, int num) {
+		boolean verif = true;
 		int escolha = 1;
 		do {
 			System.out.println("Deseja consultar dado:\n1 - Nome\n2 - Número de Membro\n3 - NIF\n4 - Sair");
@@ -86,25 +87,26 @@ public class FuncMembro {
 			switch(escolha) {
 			
 			// dado o nome
-			case 1: System.out.println("Insira o primeiro nome: ");
-					String totalnome = "";
-					String p_nome = Ler.umaString();
-					for(int i = 0; i < ginasio.get(num).getMembros().size(); i++) {
-						if(ginasio.get(num).getMembros().get(i).getP_nome().equals(p_nome)) {
-							System.out.println("Insira o último nome: ");
-							String u_nome = Ler.umaString();
-							if(ginasio.get(num).getMembros().get(i).getU_nome().equals(u_nome)) {
-								totalnome += ginasio.get(num).getMembros().get(i).toString() + "\n";
+			case 1: verif = true;
+					do {
+						System.out.println("Insira o primeiro nome: ");
+						String totalnome = "";
+						String p_nome = Ler.umaString();
+						System.out.println("Insira o último nome: ");
+						String u_nome = Ler.umaString();
+						for(int i = 0; i < ginasio.get(num).getMembros().size(); i++) {
+							if(ginasio.get(num).getMembros().get(i).getP_nome().equals(p_nome) && ginasio.get(num).getMembros().get(i).getU_nome().equals(u_nome)) {
+								totalnome = ginasio.get(num).getMembros().get(i).toString();
 							}
 						}
-					}
-					
-					if(totalnome.equals("")) {
-						System.out.println("Não existe nenhum membro registado com esse nome!");
-					}
-					else {
-						System.out.println(totalnome);
-					}
+						if(totalnome.equals("")) {
+							System.out.println("Não existe nenhum membro registado com esse nome!");
+						}
+						else {
+							System.out.println(totalnome);
+							verif = false;
+						}
+				} while(verif);
 			break;
 			
 			// dado o número de membro
@@ -244,18 +246,54 @@ public class FuncMembro {
 					break;
 					
 					// --------------- mudar a altura ------------------
-					case 4:
+					case 4:	int escaltura = 1;
+							while(escaltura == 1) {
+								System.out.println("Antiga altura: " + ginasio.get(num).getMembros().get(i).getAltura() + "cm");
+								System.out.println("Insira a nova altura (em centímetros):");
+								int novaltura = Ler.umInt();
+								
+								if(novaltura < 30 || novaltura > 300) {
+									System.out.println("Valor não permitido! Apenas permitidos valores de 30 a 300");
+								}
+								else {
+									escaltura = 2;
+								}
+							}
 					break;
 					
 					// --------------- mudar o peso --------------------
-					case 5:
+					case 5:	int escpeso = 1;
+							while(escpeso == 1) {
+								System.out.println("Antigo peso: " + ginasio.get(num).getMembros().get(i).getPeso() + "kg");
+								System.out.println("Insira o novo peso (em quilogramas):");
+								int novaltura = Ler.umInt();
+								
+								if(novaltura < 10 || novaltura > 500) {
+									System.out.println("Valor não permitido! Apenas permitidos valores de 10 a 500");
+								}
+								else {
+									escpeso = 2;
+								}
+							}
 					break;
 					
 					// --------------- mudar o sexo --------------------
-					case 6:
+					case 6: int escsexo = 1;
+							while(escsexo == 1) {
+								System.out.println("Antigo sexo: " + ginasio.get(num).getMembros().get(i).getSexo());
+								System.out.println("Insira o novo sexo (M ou F):");
+								char novosexo = Ler.umChar();
+								
+								if(novosexo != 'M' && novosexo != 'm' && novosexo != 'F' && novosexo != 'f') {
+									System.out.println("Caracter introduzido não permitido, apenas permitido M ou F!");
+								}
+								else {
+									escsexo = 2;
+								}
+							}
 					break;
 					
-					
+					// --------------- sair --------------------
 					case 7:
 					break;
 					

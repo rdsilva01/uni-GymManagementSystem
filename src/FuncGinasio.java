@@ -38,8 +38,50 @@ public class FuncGinasio {
 	
 	/* ------------------- CONSULTAR GINÁSIO DADO NOME ------------------------- *
 	 * ------------------------------------------------------------------------- */
-	public static int consultarGinasioNome(ArrayList<Ginasio> ginasios) {
-		System.out.println("Insira o nome do Ginásio: ");
+	public static int consultarGinasio(ArrayList<Ginasio> ginasios) {
+		int escolha = 0;
+		int gimnum = -1;
+		do {
+			System.out.println("Deseja consultar o ginásio dado:\n1 - Nome\n2 - Número\n3 - Sair");
+			escolha = Ler.umInt();
+			switch(escolha) {
+			
+			case 1: System.out.println("Insira o nome do Ginásio: ");
+					String nome = Ler.umaString();
+					
+					// verificar se existe o Ginásio
+					for(int i = 0; i < ginasios.size(); i++) {
+						if(ginasios.get(i).getNome().equals(nome)) {
+							System.out.println(ginasios.get(i).toString());
+							gimnum = i;
+						}
+					}
+			break;
+			
+			case 2:	System.out.println("Insira o número do Ginásio: ");
+					int num = Ler.umInt();
+					
+					// verificar se existe o Ginásio
+					for(int i = 0; i < ginasios.size(); i++) {
+						if(ginasios.get(i).getNum() == num) {
+							System.out.println(ginasios.get(i).toString());
+							gimnum = i;
+						}
+					}
+			break;
+			
+			case 3:	System.out.println("A sair...");
+					escolha = 2;
+			break;
+			
+			default: System.out.println("Opção errada! Tente novamente!");
+			}
+		} while(escolha != 1 && escolha !=2);
+		
+		return gimnum;
+		
+		
+		/*System.out.println("Insira o nome do Ginásio: ");
 		String nome = Ler.umaString();
 		
 		// verificar se existe o Ginásio
@@ -50,7 +92,7 @@ public class FuncGinasio {
 			}
 		}
 		System.out.print("Não existe nenhum ginásio com o nome dado");
-		return -1;
+		return -1;*/
 	}
 	
 	/* ------------------- ALTERAR GINÁSIO ------------------------------------- *

@@ -38,7 +38,7 @@ public class Staff extends Pessoa implements Serializable{
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nTipo: " + tipo + " com Escalão [" + escalao + "]\n";
+		return "Nº [" + num_staff + "]" +  super.toString() + "\nTipo: " + tipo + " com Escalão [" + escalao + "]\n";
 	}
 	
 	// equals
