@@ -294,7 +294,7 @@ public class GerirGinasio {
 									case 5:	escolha4 = 1;
 											do {
 												escolha4 = menustats();
-												int escolha5;
+												int escolha5 = 1;
 												switch(escolha4) {
 												
 												// ------ membros ----------
@@ -303,19 +303,19 @@ public class GerirGinasio {
 															switch(escolha5) {
 															
 															// ------ nº total de membros ----------
-															case 1: 
+															case 1: FuncStats.numMembros(ginasios, ginum);
 															break;
 															
 															// ------ nº de membros inscritos em aulas ----------
 															case 2:	FuncStats.membrosInscAula(ginasios, ginum);
 															break;
 															
-															// ------  ----------
-															case 3:
+															// ------ membros com X idade ----------
+															case 3: FuncStats.memVerIdade(ginasios, ginum);
 															break;
 															
-															// ------  ----------
-															case 4:
+															// ------ membros inscritos em duas ou mais aulas ----------
+															case 4:	FuncStats.memInscAula(ginasios, ginum);
 															break;
 															
 															// ------ sair ----------
@@ -329,7 +329,38 @@ public class GerirGinasio {
 												break;
 												
 												// ------ staff ----------
-												case 2:
+												case 2:	do {
+														escolha5 = FuncStats.menuStaff();
+														switch(escolha5) {
+														
+														// ------ nº total de staff ----------
+														case 1: FuncStats.numStaff(ginasios, ginum);
+														break;
+														
+														// ------ staff com X escalão ----------
+														case 2:	FuncStats.escalaoStaff(ginasios, ginum);
+														break;
+														
+														// ------ staff com X posição ----------
+														case 3:	FuncStats.posicaoStaff(ginasios, ginum);
+														break;
+														
+														// ------ staff com X anos ----------
+														case 4:	FuncStats.idadeStaff(ginasios, ginum);
+														break;
+														
+														// ------ nº de staff que dá uma ou mais aulas ----------
+														case 5: FuncStats.aulasStaff(ginasios, ginum);
+														break;
+														
+														// ------ sair ----------
+														case 6:	
+														break;
+														
+														default: System.out.println("Opção errada! Tente novamente!");
+														}
+													} while(escolha5 != 6);
+		
 												break;
 												
 												// ------ aulas ----------
