@@ -12,11 +12,11 @@ public class Pessoa implements Serializable{
 	private double peso; // peso em kg
 	private char sexo;
 	
-	public Pessoa(String p_nome, String u_nome,int nif, int dia, int mes, int ano, int altura, double peso, char sexo) {
+	public Pessoa(String p_nome, String u_nome,int nif, int dia, int mes, int ano, int altura, double peso, char sexo, String profissao) {
 		this.p_nome = p_nome;
 		this.u_nome = u_nome;
 		this.nif = nif;
-		profissao = "";
+		this.profissao = profissao;
 		data_nasc = LocalDate.of(ano, mes, dia);
 		this.altura = altura;
 		this.peso = peso;
@@ -91,7 +91,7 @@ public class Pessoa implements Serializable{
 	public String toString() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		
-		return "Primeiro nome: " + p_nome + "\nÚltimo nome: " + u_nome + "\nNIF: " + nif + "\nProfissão: " + profissao + "\nData de nascimento: " + (data_nasc.format(formatter)) + "\nAltura: " + altura + "\nPeso: " + peso;
+		return "  Primeiro nome: " + p_nome + "\n  Último nome: " + u_nome + "\n  NIF: " + nif + "\n  Profissão: " + profissao + "\n  Data de nascimento: " + (data_nasc.format(formatter)) + "\n  Altura: " + altura + " cm\n  Peso: " + peso + " kg";
 	}
 	
 	// equals

@@ -16,7 +16,11 @@ public class Ginasio implements Serializable{
 		ultimo++;
 		this.nome = nome;
 		precos = new ArrayList<Double>();
+		precos.add((double) 30); // preço base
+		precos.add(0.5); // multiplicador do preco pela idade
+		precos.add(0.5); // multiplicador do preco pela idade
 		quotas = new ArrayList<Double>();
+		quotas.add(0.5 * precos.get(0));
 		aulas = new ArrayList<Aula>();
 		membros = new ArrayList<Membro>();
 		totalpax = new ArrayList<Pessoa>();
@@ -111,21 +115,21 @@ public class Ginasio implements Serializable{
 		String aulastring = "";
 		
 		for(int i = 0; i < membros.size(); i++) {
-			memstring += membros.get(i).toString();
+			memstring += "+---------------------------------+\n" + membros.get(i).toString();
 		}
 		
 		for(int j = 0; j < staff.size(); j++) {
-			staffstring += staff.get(j).toString();
+			staffstring += "+---------------------------------+\n" + staff.get(j).toString();
 		}
 		
 		for(int k = 0; k < aulas.size(); k++) {
-			aulastring += aulas.get(k).toString();
+			aulastring += "+---------------------------------+\n" + aulas.get(k).toString();
 		}
 		
 		
 		
-		return "#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#\nnº[" + num + "] - Nome: " + nome + "\nPreços: " + precos + "; Quotas: " + quotas + "\nAulas:\n"
-				+ aulastring + "\n\n+---------------------------------+\n| Membros:\n+---------------------------------+\n" + memstring + "+---------------------------------+\nStaff:\n" + staffstring + "\nTotal de Pessoas [" + (membros.size()+staff.size()) + "]\n###################################\n";
+		return "****************************************\n****************************************\n  Nº[" + num + "] - NOME: " + nome + "\n****************************************\n****************************************\n  Preços: " + precos + "; Quotas: " + quotas + "\n  Aulas:\n"
+				+ aulastring + "\n\n+---------+\n| Membros |\n+---------+\n" + memstring + "+-------+\n| Staff |\n+-------+\n" + staffstring + "\n  Total de Pessoas [" + (membros.size()+staff.size()) + "]\n****************************************\n";
 	}									
 
 	public static void setUltimo(int ult) {

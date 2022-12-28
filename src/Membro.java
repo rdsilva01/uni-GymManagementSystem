@@ -9,7 +9,7 @@ public class Membro extends Pessoa implements Serializable{
 	private double quota_mem;
 	
 	public Membro(Pessoa p) {
-		super(p.getP_nome(), p.getU_nome(), p.getNif(), p.getDataNasc().getDayOfMonth(), p.getDataNasc().getMonthValue(), p.getDataNasc().getYear(), p.getAltura(), p.getPeso(), p.getSexo()); // String p_nome, String u_nome,int nif, int dia, int mes, int ano, float altura, float peso
+		super(p.getP_nome(), p.getU_nome(), p.getNif(), p.getDataNasc().getDayOfMonth(), p.getDataNasc().getMonthValue(), p.getDataNasc().getYear(), p.getAltura(), p.getPeso(), p.getSexo(), p.getProfissao()); // String p_nome, String u_nome,int nif, int dia, int mes, int ano, float altura, float peso
 		num_membro = 0;
 		preco = 0.0;
 		quota_mem = 0.0;
@@ -58,7 +58,7 @@ public class Membro extends Pessoa implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Nº[" + num_membro + "]\n" + super.toString() + "\nAulas: " + aulas + "\nPreço: " + preco + " €\nQuota:" + quota_mem +" €\n\n";
+		return "  Nº[" + num_membro + "]\n" + super.toString() + "\n  Aulas: " + aulas + "\n  Preço: " + preco + " €\n  Quota: " + quota_mem +" €\n\n";
 	}
 	
 	// equals

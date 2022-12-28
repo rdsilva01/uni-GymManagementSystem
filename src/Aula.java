@@ -7,6 +7,7 @@ public class Aula implements Serializable{
 	private String nome;
 	private int numpaxmax;
 	private ArrayList<Membro> inscritos;
+	private ArrayList<Staff> instrutor;
 	private String dds;
 	private int codigo;
 	
@@ -16,6 +17,7 @@ public class Aula implements Serializable{
 		this.nome = nome;
 		this.dds = dds;
 		inscritos = new ArrayList<Membro>();
+		instrutor = new ArrayList<Staff>();
 		this.numpaxmax = numpaxmax;
 		this.codigo = codigo;
 		
@@ -71,7 +73,17 @@ public class Aula implements Serializable{
 
 	@Override
 	public String toString() {
-		return "CÓDIGO [" + codigo + "] - Aula de " + nome + "\nHorário: " + dds + " às " + hora + "h" + minuto + "min\nVagas disponíveis: [" + (numpaxmax - inscritos.size()) + "]";
+		String instruct = "";
+		try {
+			for(int i = 0; i < instrutor.size(); i++) {
+				instruct += "\n[" + instrutor.get(i).getNum_staff() + "] " + instrutor.get(i).getP_nome() + " " + instrutor.get(i).getU_nome();
+			}
+		}
+		catch(NullPointerException n) {
+			instruct = " SEM INSTRUTOR";
+		}
+		
+		return "  CÓDIGO [" + codigo + "] - Aula de " + nome + "\n  Horário: " + dds + " às " + hora + "h" + minuto + "min\n  Instrutor(es):" + instruct + "\n  Vagas disponíveis: [" + (numpaxmax - inscritos.size()) + "]";
 	}
 
 	public String getDds() {
@@ -89,6 +101,21 @@ public class Aula implements Serializable{
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
+
+	public ArrayList<Staff> getInstrutor() {
+		return instrutor;
+	}
+
+	public void setInstrutor(ArrayList<Staff> instrutor) {
+		this.instrutor = (ArrayList<Staff>) instrutor.clone();
+	}
+	
+	public void addInstrutor(Staff instruct) {
+		instrutor.add(instruct);
+	}
+	
+	
+	
 	
 	
 	// equals
