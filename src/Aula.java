@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Aula implements Serializable{
 	private int hora;
@@ -67,8 +68,14 @@ public class Aula implements Serializable{
 		inscritos.add(mem);
 	}
 	
-	public void removeInscritos(Membro mem) {
-		inscritos.remove(mem);
+	public void removeInscritos(int num) {
+		for(int i = 0; i < inscritos.size(); i++) {
+			if(inscritos.get(i).getNum_membro() == num) {
+				inscritos.remove(i);
+			}
+		}
+	
+		
 	}
 
 	@Override
@@ -76,14 +83,14 @@ public class Aula implements Serializable{
 		String instruct = "";
 		try {
 			for(int i = 0; i < instrutor.size(); i++) {
-				instruct += "\n[" + instrutor.get(i).getNum_staff() + "] " + instrutor.get(i).getP_nome() + " " + instrutor.get(i).getU_nome();
+				instruct += "\n  [" + instrutor.get(i).getNum_staff() + "] " + instrutor.get(i).getP_nome() + " " + instrutor.get(i).getU_nome();
 			}
 		}
 		catch(NullPointerException n) {
 			instruct = " SEM INSTRUTOR";
 		}
 		
-		return "  CÓDIGO [" + codigo + "] - Aula de " + nome + "\n  Horário: " + dds + " às " + hora + "h" + minuto + "min\n  Instrutor(es):" + instruct + "\n  Vagas disponíveis: [" + (numpaxmax - inscritos.size()) + "]";
+		return "\n  CÓDIGO [" + codigo + "] - Aula de " + nome + "\n  Horário: " + dds + " às " + hora + "h" + minuto + "min\n  Instrutor(es):" + instruct + "\n  Vagas disponíveis: [" + (numpaxmax - inscritos.size()) + "]";
 	}
 
 	public String getDds() {
@@ -114,12 +121,30 @@ public class Aula implements Serializable{
 		instrutor.add(instruct);
 	}
 	
-	
-	
-	
-	
-	// equals
-	
-	// clone
+	public void removeInstrutor(int num) {
+		for(int i = 0; i < instrutor.size(); i++) {
+			if(instrutor.get(i).getNum_staff() == num) {
+				instrutor.remove(i);
+			}
+		}
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Aula other = (Aula) obj;
+		return codigo == other.codigo && Objects.equals(dds, other.dds) && hora == other.hora
+				&& Objects.equals(inscritos, other.inscritos) && Objects.equals(instrutor, other.instrutor)
+				&& minuto == other.minuto && Objects.equals(nome, other.nome) && numpaxmax == other.numpaxmax;
+	}
+	
+	
+	
+
+	
 }

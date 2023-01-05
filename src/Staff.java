@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Staff extends Pessoa implements Serializable{
 	private String tipo;
@@ -12,6 +13,7 @@ public class Staff extends Pessoa implements Serializable{
 		escalao = 1;
 		this.tipo = tipo;
 		num_staff = 0;
+		instaula = new ArrayList<Aula>();
 	}
 
 	public String getTipo() {
@@ -48,18 +50,34 @@ public class Staff extends Pessoa implements Serializable{
 	}
 
 	public void setInstaula(ArrayList<Aula> instaula) {
-		this.instaula = instaula;
+		this.instaula =(ArrayList<Aula>) instaula.clone();
 	}
 	
 	public void addAula(Aula a) {
 		instaula.add(a);
 	}
 	
-	public void removeAula(Aula a) {
-		instaula.remove(a);
+	public void removeAula(int num) {
+		for(int i = 0; i < instaula.size(); i++) {
+			if(instaula.get(i).getCodigo() == num) {
+				instaula.remove(i);
+			}
+		}
 	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Staff other = (Staff) obj;
+		return escalao == other.escalao && Objects.equals(instaula, other.instaula) && num_staff == other.num_staff
+				&& Objects.equals(tipo, other.tipo);
+	}
+
 	
-	// equals
-	
-	// clone
 }

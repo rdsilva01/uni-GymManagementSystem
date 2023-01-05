@@ -1,6 +1,7 @@
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Membro extends Pessoa implements Serializable{
 	private int num_membro;
@@ -52,17 +53,32 @@ public class Membro extends Pessoa implements Serializable{
 		aulas.add(a);
 	}
 	
-	public void removeAula(Aula a) {
-		aulas.remove(a);
+	public void removeAula(int num) {
+		for(int i = 0; i < aulas.size(); i++) {
+			if(aulas.get(i).getCodigo() == num) {
+				aulas.remove(i);
+			}
+		}
 	}
 
 	@Override
 	public String toString() {
 		return "  Nº[" + num_membro + "]\n" + super.toString() + "\n  Aulas: " + aulas + "\n  Preço: " + preco + " €\n  Quota: " + quota_mem +" €\n\n";
 	}
-	
-	// equals
-	
-	// clone
 
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Membro other = (Membro) obj;
+		return Objects.equals(aulas, other.aulas) && num_membro == other.num_membro
+				&& Double.doubleToLongBits(preco) == Double.doubleToLongBits(other.preco)
+				&& Double.doubleToLongBits(quota_mem) == Double.doubleToLongBits(other.quota_mem);
+	}
+	
 }

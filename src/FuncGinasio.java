@@ -12,10 +12,21 @@ public class FuncGinasio {
 		String nome = Ler.umaString(); 
 		
 		// não podem existir nomes iguais
-		for (int i = 0; i < ginasio.size(); i++) {
-			if (ginasio.get(i).getNome().equals(nome)) {
-				System.out.println("  Um ginásio com esse nome já existe!");
-				return;
+		int cont1 = 1;
+		while(cont1 == 1) {
+			for (int i = 0; i < ginasio.size(); i++) {
+				if (ginasio.get(i).getNome().equals(nome)) {
+					System.out.println("  Um ginásio com esse nome já existe!");
+					System.out.print("  Insira o nome do Ginásio: ");
+					nome = Ler.umaString(); 
+					cont1++;
+				}
+			}
+			if(cont1 == 1) {
+				cont1 = 0;
+			}
+			else {
+				cont1 = 1;
 			}
 		}
 		
@@ -23,7 +34,7 @@ public class FuncGinasio {
 		ginasio.add(g);
 		
 		try {
-		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("gymdata.md"));
 
 		      // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
 		      os.writeInt(Ginasio.getUltimo());
@@ -87,17 +98,20 @@ public class FuncGinasio {
 	 * ------------------------------------------------------------------------- */
 	public static void alterarGinasio(ArrayList<Ginasio> ginasio) {
 		boolean verif = true;
+		boolean verif2 = false;
 		
 		System.out.println("  Insira o nome do Ginásio que pretende alterar");
 		String nome = Ler.umaString();
 		
+		
 		// verificar se existe o ginásio com o nome dado
 		for(int i = 0; i < ginasio.size(); i++) {
 			if(ginasio.get(i).getNome().equals(nome)) {
+				verif2 = true;
 				int escolha = 1;
 				do {
 					System.out.println("*************************************");
-					System.out.println("O que pretende alterar?\n  1 - Nome\n  2 - Precos\n  3 - Aulas\n  4 - Membros\n  5 - Staff\n  6 - Voltar");
+					System.out.println("O que pretende alterar?\n  1 - Nome\n  2 - Precos\n  3 - Voltar");
 					System.out.print("*************************************\n  Opção: ");
 					escolha = Ler.umInt();
 					switch(escolha) {
@@ -122,70 +136,104 @@ public class FuncGinasio {
 					case 2:	
 							int escolhpreco = 1;
 							do {
-								System.out.println("  Os preços atuais são: " + ginasio.get(i).getPrecos().toString());
-								System.out.println("  A quota anual é de: " + ginasio.get(i).getQuotas().toString());
+								String precosstring =  "\n  - " + ginasio.get(i).getPrecos().get(0) + "€";
+								for(int l = 1; l < ginasio.get(i).getPrecos().size(); l++) {
+									precosstring += "\n  - " + (ginasio.get(i).getPrecos().get(l) * ginasio.get(i).getPrecos().get(0)) + " €";
+								}
+								
+								System.out.println("  Os preços atuais são: " + precosstring);
+								System.out.println("  A quota anual é de: " + ginasio.get(i).getQuota());
 								System.out.println("  Deseja alterar:\n1 - Preços\n2 - Quota\n3 - Voltar");
 								escolhpreco = Ler.umInt();
 								switch(escolhpreco) {
 								// preco
 								case 1: System.out.println("  Os preços funcionam da seguinte maneira:\nO primeiro preço é o preço base - " + ginasio.get(i).getPrecos().get(0));
-										System.out.println("  Os restantes são modificadores, em relação à idade, etc...");
-										String rest = "";
-										for(int k = 1; k < ginasio.get(i).getPrecos().size(); k++) {
-											rest += k + " - " + ginasio.get(i).getPrecos().get(k) + "\n";
-										}
-										System.out.println(rest);
-										System.out.print("*******************************");
-										System.out.println("  O que deseja alterar?\n1 - Preço Base\n2 - Modificadores\n3 - Voltar");
-										System.out.print("*******************************\n  Opção: ");
+										System.out.println("  Os restantes são modificados, em relação à idade:");
+										System.out.println("  1 - " + ginasio.get(i).getPrecos().get(1));
+										System.out.println("  2 - " + ginasio.get(i).getPrecos().get(2));
+										
 										int escolhpreco2 = 1;
 										do {
+											System.out.print("*******************************");
+											System.out.println("  O que deseja alterar?\n1 - Preço Base\n2 - Modificadores\n3 - Voltar");
+											System.out.print("*******************************\n  Opção: ");
 											escolhpreco2 = Ler.umInt();
-											switch(escolhpreco) {
+											switch(escolhpreco2) {
 											
 											// preço base
 											case 1:	System.out.println("  Preço Base atual = " + ginasio.get(i).getPrecos().get(0));
 													System.out.println("  Insira o novo valor ( valor < 0): ");
 													double valor = 1;
-													do {
-														valor = Ler.umDouble();
-													} while(valor < 0);
+													valor = Ler.umDouble();
+													verif = true;
+													while(verif) {
+														if(valor < 0) {
+															System.out.print("  Insira um valor superior a 0");
+															valor = Ler.umDouble();
+														}
+														else {
+															System.out.println("  Preço alterado com sucesso!");
+															ginasio.get(i).getPrecos().set(0, valor);
+															verif = false;
+														}
+													}
 											break;
 											
 											// modificadores
-											case 2:	for(int l = 1; l < ginasio.get(i).getPrecos().size(); l++) {
-														rest += "  " + l + " - " + ginasio.get(i).getPrecos().get(l) + "\n";
-													}
-													System.out.print("*************************************");
-													System.out.println("  Modificadores atuais:\n" + rest);
-													System.out.println("  Deseja:\n1 - Alterar modificadores\n  2 - Voltar");
-													System.out.print("*************************************\n  Opção: ");
+											case 2:	
 													int escolhmod = 1;
 													do {
+														System.out.print("*************************************");
+														System.out.println("  Modificadores atuais:");
+														System.out.println("  1 - " + ginasio.get(i).getPrecos().get(1));
+														System.out.println("  2 - " + ginasio.get(i).getPrecos().get(2));
+														System.out.println("  Deseja:\n1 - Alterar modificadores\n  2 - Voltar");
+														System.out.print("*************************************\n  Opção: ");
 														escolhmod = Ler.umInt();
 														switch(escolhmod) {
 														// alterar mod
-														case 1: System.out.println("  Qual dos seguintes modificadores deseja alterar?\n" + rest + "" + ginasio.get(i).getPrecos().size() + " - Voltar");
+														case 1: System.out.println("\n  Qual dos seguintes modificadores deseja alterar?");
+																System.out.println("  1 - " + ginasio.get(i).getPrecos().get(1));
+																System.out.println("  2 - " + ginasio.get(i).getPrecos().get(2));
+																System.out.println("  3 - Voltar");
+														
 																int escolhmod2 = 1;
+																verif = true;
 																do {
 																	escolhmod2 = Ler.umInt();
-																	System.out.println("  Insira o novo modificador");
-																	double mod = Ler.umDouble();
-																	ginasio.get(i).getPrecos().set(escolhmod, mod);
-																	
-																} while(escolhmod2 != ginasio.get(i).getPrecos().size());
+																	while(verif) {
+																		if(escolhmod2 != 1 && escolhmod2 != 2) {
+																			System.out.println("  Modificador introduzido não foi encontrado! Tente novamente");
+																			System.out.println("  Modificadores atuais:");
+																			System.out.println("  1 - " + ginasio.get(i).getPrecos().get(1));
+																			System.out.println("  2 - " + ginasio.get(i).getPrecos().get(2));
+																			
+																			escolhmod2 = Ler.umInt();
+																		}
+																		else {
+																			System.out.println("  Insira o novo modificador (em percentagem)");
+																			double mod = Ler.umDouble();
+																			if(mod < 0) {
+																				System.out.println("  Tem de inserir um valor maior que 0, recorde-se que o valor é uma percentagem!");
+																				System.out.println("  Insira o novo modificador (em percentagem)");
+																				mod = Ler.umDouble();
+																			}
+																			else {
+																				ginasio.get(i).getPrecos().set(escolhmod2, mod/100);
+																				verif = false;
+																			}
+																		}
+																	}
+																} while(verif);
 														break;
 														
 														// voltar
 														case 2: 
 														break;
 														
-														
 														default: System.out.println("  Opção errada! Tente novamente!");
 														}
 													} while(escolhmod != 2);
-													
-											
 											break;
 											
 											// voltar
@@ -198,44 +246,33 @@ public class FuncGinasio {
 								break;
 								
 								// quota
-								case 2: System.out.println("*************************************************************");
-										System.out.println("  A quota é valor pago anualmente para ser sócio do ginásio");
-										System.out.println("  A quota atual é de: " + ginasio.get(i).getQuotas().toString());
-										System.out.println("  Deseja:\n1 - Alterar valor da quota\n  2 - Voltar");
-										System.out.print("*************************************************************\n  Opção: ");
-										int escolhquota = 1;
+								case 2: int escolhquota = 1;
 										do {
+											System.out.println("*************************************************************");
+											System.out.println("  A quota é valor pago anualmente para ser sócio do ginásio");
+											System.out.println("  A quota atual é de: " + ginasio.get(i).getQuota());
+											System.out.println("  Deseja:\n  1 - Alterar valor da quota\n  2 - Voltar");
+											System.out.print("*************************************************************\n  Opção: ");
 											escolhquota = Ler.umInt();
 											switch(escolhquota) {
 											
 											// alterar quota
-											case 1:	if(ginasio.get(i).getQuotas().size() == 1) {
-														System.out.println("  Introduza o novo valor da quota");
-														double novovalor = Ler.umDouble();
-														ginasio.get(i).getQuotas().set(0, novovalor);
-														escolhquota = 3;
-													}
-													else {
-														String quotastr = "";
-														for(int m = 0; m < ginasio.get(i).getQuotas().size(); m++) {
-															quotastr += "  " + (m+1) + " - " + ginasio.get(i).getQuotas().get(m) + "\n";
+											case 1:	System.out.println("  Quota atual: " + ginasio.get(i).getQuota());
+													System.out.print("  Insira a nova quota ( valor < 0): ");
+													double novaquota = 1;
+													novaquota = Ler.umDouble();
+													verif = true;
+													while(verif) {
+														if(novaquota < 0) {
+															System.out.print("  Insira um valor superior a 0");
+															novaquota = Ler.umDouble();
 														}
-														System.out.println("*************************************");
-														System.out.println("  Qual das quotas deseja alterar:\n" + quotastr);
-														System.out.print("*************************************\n  Opção: ");
-														int escolhquota2 = 1;
-														do {
-															escolhquota2 = Ler.umInt();
-															System.out.println("  Insira o novo valor");
-															double novovalor = 0.1;
-															do {
-																novovalor  = Ler.umDouble();
-																ginasio.get(i).getQuotas().set(escolhquota2, novovalor);
-															} while(novovalor < 0 || novovalor >= 1);
-															System.out.println("  Novo valor: " + novovalor);
-															
-														} while(escolhquota2 != ginasio.get(i).getQuotas().size()+1);
-													}
+														else {
+															System.out.println("  Preço alterado com sucesso!");
+															ginasio.get(i).setQuota(novaquota);
+															verif = false;
+														}
+											}		
 											break;
 											
 											// voltar
@@ -259,32 +296,22 @@ public class FuncGinasio {
 							
 					break;
 					
-					// alterar aulas
-					case 3:
-					break;
-					
-					// alterar membros
-					case 4:
-					break;
-					
-					// alterar staff
-					case 5:
-					break;
-					
 					// voltar
-					case 6:
+					case 3:
 					break;
 					
 					default: System.out.println("  Opção errada! Tente novamente!");
 					}
-				} while(escolha != 6);
+				} while(escolha != 3);
 				
 			}
+			if(verif2 == false) {
+				System.out.println("Não existe nenhum ginásio com esse nome");
+			}
 		}
-		System.out.println("  Não existe nenhum ginásio com esse nome!");
 		
 		try {
-		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("gymdata.md"));
 
 		      // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
 		      os.writeInt(Ginasio.getUltimo());
@@ -298,7 +325,7 @@ public class FuncGinasio {
 	
 	/* ------------------- APAGAR GINÁSIO -------------------------------------- *
 	 * ------------------------------------------------------------------------- */
-	public static void apagarGinásio(ArrayList<Ginasio> ginasio) {
+	public static void apagarGinasio(ArrayList<Ginasio> ginasio) {
 		int apagar = 1;
 		do {	
 			System.out.println("  Insira o nº do Ginásio que pretende apagar: ");
@@ -324,7 +351,7 @@ public class FuncGinasio {
 		} while(apagar != 2);
 		
 		try {
-		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("gymdata.md"));
 
 		      // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
 		      os.writeInt(Ginasio.getUltimo());

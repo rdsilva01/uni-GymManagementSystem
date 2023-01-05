@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Pessoa implements Serializable{
 	private String p_nome; // primeiro nome
@@ -91,12 +92,37 @@ public class Pessoa implements Serializable{
 	public String toString() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		
-		return "  Primeiro nome: " + p_nome + "\n  Último nome: " + u_nome + "\n  NIF: " + nif + "\n  Profissão: " + profissao + "\n  Data de nascimento: " + (data_nasc.format(formatter)) + "\n  Altura: " + altura + " cm\n  Peso: " + peso + " kg";
+		String sexostr = "";
+		if(sexo == 'F' || sexo == 'f') {
+			sexostr = "Feminino";
+		}
+		else if(sexo == 'M' || sexo == 'm') {
+			sexostr = "Masculino";
+		}
+		
+		
+		return "  Primeiro nome: " + p_nome + "\n  Último nome: " + u_nome + "\n  NIF: " + nif + "\n  Sexo: " + sexostr + "\n  Profissão: " + profissao + "\n  Data de nascimento: " + (data_nasc.format(formatter)) + "\n  Altura: " + altura + " cm\n  Peso: " + peso + " kg";
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pessoa other = (Pessoa) obj;
+		return altura == other.altura && Objects.equals(data_nasc, other.data_nasc) && nif == other.nif
+				&& Objects.equals(p_nome, other.p_nome)
+				&& Double.doubleToLongBits(peso) == Double.doubleToLongBits(other.peso)
+				&& Objects.equals(profissao, other.profissao) && sexo == other.sexo
+				&& Objects.equals(u_nome, other.u_nome);
 	}
 	
-	// equals
 	
-	// clone
 	
 	
 	

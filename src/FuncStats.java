@@ -15,7 +15,8 @@ public class FuncStats {
 		System.out.println("  2 - Nº de membros inscritos em aulas");
 		System.out.println("  3 - Membros com X anos");
 		System.out.println("  4 - Membros inscritos em duas ou mais aulas");
-		System.out.println("  5 - Sair");
+		System.out.println("  5 - Percentagem por Género");
+		System.out.println("  6 - Sair");
 		System.out.print("***********************************************\n  Opção: ");
 		opcaomembro = Ler.umInt();
 		return opcaomembro;
@@ -531,6 +532,32 @@ public class FuncStats {
 		}
 	}
 	
+	// ---------------- nº de membros inscritos --------------------------
+		public static void membrosGenero(ArrayList<Ginasio> ginasio, int num) {
+			int num_membros = 0;
+			int num_membros_total = ginasio.get(num).getMembros().size();
+			
+			for(int i = 0; i < ginasio.get(num).getMembros().size(); i++) {
+				if(ginasio.get(num).getMembros().get(i).getSexo() == 'F' || ginasio.get(num).getMembros().get(i).getSexo() == 'f') {
+					num_membros++;
+				}
+			}
+			
+			if(num_membros_total > 0) {
+				double percentagemF = ((double)num_membros / (double)num_membros_total) * 100;
+				double percentagemM = ((double)(num_membros_total - num_membros) / (double)num_membros_total) * 100;
+				System.out.println("*********************************************************");
+				System.out.println("  O número de membros do sexo Feminino é de: " + num_membros + " membro(s)");
+				System.out.println("  O número de membros do sexo Masculino é de: " + (num_membros_total - num_membros) + " membro(s)");
+				System.out.println("  De um total de " + num_membros_total + " membro(s)");
+				System.out.println("  Em percentagem: " + percentagemF + "% membros femininos");
+				System.out.println("  Em percentagem: " + percentagemM + "% membros masculinos");
+				}
+			else {
+				System.out.println("  Não tem membros!");
+			}
+		}
+	
 	// *********************************************************************
 	// ***************************** STAFF *********************************
 	// *********************************************************************
@@ -543,7 +570,8 @@ public class FuncStats {
 		System.out.println("  3 - STAFF com X posição");
 		System.out.println("  4 - STAFF com X anos");
 		System.out.println("  5 - Nº de STAFF que dá pelo menos 1 aula");
-		System.out.println("  6 - Voltar");
+		System.out.println("  6 - Percentagem por Género");
+		System.out.println("  7 - Voltar");
 		System.out.print("*********************************************\n  Opção: ");
 		opcaostaff = Ler.umInt();
 		return opcaostaff;
@@ -1065,13 +1093,13 @@ public class FuncStats {
 	}
 	
 	// ---------------- staff que dá pelo menos 1 aula --------------------------
-	//public static void aulasStaff(ArrayList<Ginasio> ginasio, int num) {
-		/*int num_staff = 0;
+	public static void aulasStaff(ArrayList<Ginasio> ginasio, int num) {
+		int num_staff = 0;
 		int num_staff_total = ginasio.get(num).getStaff().size();
 		String totalstaff = "";
 		
 		for(int i = 0; i < ginasio.get(num).getStaff().size(); i++) {
-			if(ginasio.get(num).getStaff().get(i). {
+			if(ginasio.get(num).getStaff().get(i).getInstaula().size() >= 1) {
 				num_staff++;
 				totalstaff += "\nnº STAFF [" + ginasio.get(num).getStaff().get(i).getNum_staff() + "] Nome: " + ginasio.get(num).getStaff().get(i).getP_nome() + " " + ginasio.get(num).getStaff().get(i).getU_nome();
 			}
@@ -1080,7 +1108,7 @@ public class FuncStats {
 		if(num_staff > 0) {
 			double percentagem = ((double)num_staff / (double)num_staff_total) * 100;
 			
-			System.out.println("O número de STAFF com " + idade + " ano(s) é de: " + num_staff + " STAFF(s)");
+			System.out.println("O número de STAFF que dá pelo menos 1 aula é de: " + num_staff + " STAFF(s)");
 			System.out.println("De um total de " + num_staff_total + " STAFF(s)");
 			System.out.println("Em percentagem: " + percentagem + "%");
 			System.out.println("Os STAFF são:" + totalstaff);
@@ -1230,7 +1258,33 @@ public class FuncStats {
 		else {
 			System.out.println("Não existe STAFF que dê pelo menos 1 aula");
 		}
-	}*/
+	}
+	
+	// ---------------- staff percentagem género --------------------------
+	public static void generoStaff(ArrayList<Ginasio> ginasio, int num) {
+		int num_staff = 0;
+		int num_staff_total = ginasio.get(num).getStaff().size();
+		
+		for(int i = 0; i < ginasio.get(num).getStaff().size(); i++) {
+			if(ginasio.get(num).getStaff().get(i).getSexo() == 'F' || ginasio.get(num).getStaff().get(i).getSexo() == 'f') {
+				num_staff++;
+			}
+		}
+		
+		if(num_staff_total > 0) {
+			double percentagemF = ((double)num_staff / (double)num_staff_total) * 100;
+			double percentagemM = ((double)(num_staff_total - num_staff) / (double)num_staff_total) * 100;
+			System.out.println("*********************************************************");
+			System.out.println("  O número de STAFF do sexo Feminino é de: " + num_staff + " STAFF");
+			System.out.println("  O número de STAFF do sexo Masculino é de: " + (num_staff_total - num_staff) + " STAFF");
+			System.out.println("  De um total de " + num_staff_total + " membro(s)");
+			System.out.println("  Em percentagem: " + percentagemF + "% STAFF femininos");
+			System.out.println("  Em percentagem: " + percentagemM + "% STAFF masculinos");
+			}
+		else {
+			System.out.println("  Não tem STAFF!");
+		}
+	}
 		
 		
 	
@@ -1240,16 +1294,129 @@ public class FuncStats {
 	public static int menuAula() {
 		int opcaoaula;
 		System.out.println("*************************************");
-		System.out.println("Deseja ver que estatística?");
-		System.out.println("1 - Total de Aulas");
-		System.out.println("2 - Aulas num X dia de semana");
-		System.out.println("3 - XXXXXXX");
-		System.out.println("4 - XXXXXXX");
-		System.out.println("5 - XXXXXXX");
-		System.out.println("6 - Sair");
+		System.out.println("  Deseja ver que estatística?");
+		System.out.println("  1 - Total de Aulas");
+		System.out.println("  2 - Dia de semana com mais aulas"); //f
+		System.out.println("  3 - Percentagem de horas manhã/tarde");
+		System.out.println("  4 - Sair");
 		System.out.print("*************************************\n  Opção: ");
 		opcaoaula = Ler.umInt();
 		return opcaoaula;
 	}
 	
+	// ---------------- dia de semana com mais aulas --------------------------
+		public static void aulasDDS(ArrayList<Ginasio> ginasio, int num) {
+			String[] dds = {"Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado", "Domingo"};
+			int[] contdds = {0,0,0,0,0,0,0};
+				for(int i = 0; i < ginasio.get(num).getAulas().size(); i++) {
+					if(ginasio.get(num).getAulas().get(i).getDds() == dds[0]) {
+						contdds[0]++;
+					}
+					else if(ginasio.get(num).getAulas().get(i).getDds().equals(dds[1])) {
+						contdds[1]++;
+					}
+					else if(ginasio.get(num).getAulas().get(i).getDds().equals(dds[2])) {
+						contdds[2]++;
+					}
+					else if(ginasio.get(num).getAulas().get(i).getDds().equals(dds[3])) {
+						contdds[3]++;
+					}
+					else if(ginasio.get(num).getAulas().get(i).getDds().equals(dds[4])) {
+						contdds[4]++;
+					}
+					else if(ginasio.get(num).getAulas().get(i).getDds().equals(dds[5])) {
+						contdds[5]++;
+					}
+					else if(ginasio.get(num).getAulas().get(i).getDds().equals(dds[6])) {
+						contdds[6]++;
+					}
+				}
+				
+				int max = 0;
+				int maxletra = 0;
+				for(int j = 0; j < contdds.length; j++) {
+					if(contdds[j] > max) {
+						max = contdds[j];
+						maxletra = j;
+					}
+				}
+				
+				int totalcont = 0;
+				
+				for(int l = 0; l < 7; l++) {
+					totalcont += contdds[l];
+				}	
+				
+				System.out.println("  O dia de semana com mais aulas é: " + dds[maxletra] + ", com " + max + " aula(s)");
+				double percentagem0 = ((double)contdds[0] / (double)totalcont) * 100;
+				double percentagem1 = ((double)contdds[1] / (double)totalcont) * 100;
+				double percentagem2 = ((double)contdds[2] / (double)totalcont) * 100;
+				double percentagem3 = ((double)contdds[3] / (double)totalcont) * 100;
+				double percentagem4 = ((double)contdds[4] / (double)totalcont) * 100;
+				double percentagem5 = ((double)contdds[5] / (double)totalcont) * 100;
+				double percentagem6 = ((double)contdds[6] / (double)totalcont) * 100;
+				
+				double[] percentarray = {percentagem0, percentagem1, percentagem2, percentagem3, percentagem4, percentagem5, percentagem6};
+				
+				String percenstr = "";
+				for(int j = 0; j < 7; j++) {
+					percenstr += "  " + dds[j] + " - " + percentarray[j] + "% [ ";
+					for(int k = 0; k < contdds[j]; k++) {
+						percenstr += "*";
+					}
+					percenstr += " ]\n";
+				}
+				
+				System.out.println("  As percentagens são:\n" + percenstr);
+				
+				
+			}
+	
+		// ---------------- total de aulas --------------------------
+		public static void aulasTotal(ArrayList<Ginasio> ginasio, int num) {
+			if(ginasio.get(num).getAulas().size() == 0) {
+				System.out.println(" Não há aulas!");
+			}
+			else {
+				System.out.println("  O número de aulas é: " + ginasio.get(num).getAulas().size());
+			}
+			
+		}
+		
+		// ---------------- manhã/tarde --------------------------
+		public static void aulasManhaTarde(ArrayList<Ginasio> ginasio, int num) {
+			int contmanha = 0;
+			int conttarde = 0;
+			
+			for(int i = 0; i < ginasio.get(num).getAulas().size(); i++) {
+				if(ginasio.get(num).getAulas().get(i).getHora() < 14) {
+					contmanha++;
+				}
+				else {
+					conttarde++;
+				}
+			}
+			
+			double percenmanha = ((double)contmanha/(double)ginasio.get(num).getAulas().size()) * 100;
+			double percentarde = ((double)conttarde/(double)ginasio.get(num).getAulas().size()) * 100;
+			
+			System.out.println("  O número de aulas de manhã é de: " + contmanha);
+			System.out.println("  O número de aulas de tarde é de: " + conttarde);
+			System.out.println("\n  Em percentagem: ");
+			
+			String percenmanhastr = "[";
+			String percentardestr = "[";
+			for(int j = 0; j < contmanha; j++){
+				percenmanhastr += "*";
+			}
+			percenmanhastr += "]";
+			for(int j = 0; j < conttarde; j++){
+				percentardestr += "*";
+			}
+			percentardestr += "]";
+			
+			System.out.println("  Manhã -> [" + percenmanha + "]% -> " + percenmanhastr);
+			System.out.println("  Tarde -> [" + percentarde + "]% -> " + percentardestr);
+		}
+		
 }

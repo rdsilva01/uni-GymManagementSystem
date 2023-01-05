@@ -20,9 +20,8 @@ public class GerirGinasio {
 		System.out.println("  1 - Membros");
 		System.out.println("  2 - Staff");
 		System.out.println("  3 - Aulas");
-		System.out.println("  4 - Pessoas");
-		System.out.println("  5 - Estatísticas");
-		System.out.println("  6 - Voltar");
+		System.out.println("  4 - Estatísticas");
+		System.out.println("  5 - Voltar");
 		System.out.println("****************************************************");
 		System.out.print("  Opção: ");
 		escolh4 = Ler.umInt();
@@ -80,7 +79,7 @@ public class GerirGinasio {
 		System.out.println("\n********************** STAFF **********************");
 		System.out.println("  1 - Criar STAFF");
 		System.out.println("  2 - Listar STAFF");
-		System.out.println("  3 - Consultar STAFF, dado o nome, NIF, cargo ou número");
+		System.out.println("  3 - Consultar STAFF, dado o nome, NIF, ou número");
 		System.out.println("  4 - Alterar STAFF");
 		System.out.println("  5 - Apagar STAFF");
 		System.out.println("  6 - Voltar");
@@ -98,31 +97,17 @@ public class GerirGinasio {
 		System.out.println("  2 - Consultar aulas");
 		System.out.println("  3 - Consultar aula, dado o nome, horas ou código");
 		System.out.println("  4 - Inscrever membro numa aula");
-		System.out.println("  5 - Atribuir instrutor a uma aula");
-		System.out.println("  6 - Alterar aula");
-		System.out.println("  7 - Apagar aula");
-		System.out.println("  8 - Voltar");
+		System.out.println("  5 - Remover membro de uma aula");
+		System.out.println("  6 - Atribuir instrutor a uma aula");
+		System.out.println("  7 - Remover instrutor de uma aula");
+		System.out.println("  8 - Alterar aula");
+		System.out.println("  9 - Apagar aula");
+		System.out.println("  10 - Voltar");
 		System.out.println("*****************************************************");
 		System.out.print("  Opção: ");
 		opcaoaula = Ler.umInt();
 		return opcaoaula;
 	}
-	
-	/* menu para a classe Pessoa
-	public static int menupessoa() {
-		int opcaoaula;
-		System.out.println("1 - Ver aniversários");
-		System.out.println("2 - Ver total de pessoas");
-		System.out.println("3 - Consultar aula, dado o nome");
-		System.out.println("4 - Consultar aula, dando a hora");
-		System.out.println("5 - Alterar aula");
-		System.out.println("6 - Apagar aula");
-		System.out.println("7 - Voltar");
-		System.out.println("****************************************************");
-		System.out.print("Opção: ");
-		opcaoaula = Ler.umInt();
-		return opcaoaula;
-	} */
 	
 	public static int menustats() {
 		int opcaostat;
@@ -146,13 +131,13 @@ public class GerirGinasio {
 	public static void main (String[] args) {
 		int escolha, escolha2, escolha3, escolha4;
 		
-		// ARRAYLISTS
+		// ArrayList dos Ginásios (todos)
 		ArrayList<Ginasio> ginasios = new ArrayList<Ginasio>();
 		
 		// Ler ficheiro
 		try {
 	
-			ObjectInputStream is = new ObjectInputStream( new FileInputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+			ObjectInputStream is = new ObjectInputStream( new FileInputStream("gymdata.md"));
 			int ult = is.readInt();
 			Ginasio.setUltimo(ult);
 			ginasios = (ArrayList<Ginasio>) is.readObject();
@@ -281,43 +266,44 @@ public class GerirGinasio {
 												break;
 
 												// ------ consultar aula, dado codigo, etc... ----------
-												case 3:	
+												case 3:	FuncAula.consultarAula(ginasios, ginum);
 												break;
 												
 												// ------ inscrever membro ----------
 												case 4: FuncAula.inscreverAula(ginasios, ginum);
 												break;
 												
+												// ------ remover membro -----------
+												case 5: FuncAula.removerMembro(ginasios, ginum);
+												break;
+												
 												// ------ atribuir instrutor ----------
-												case 5:	FuncAula.atribuirAula(ginasios, ginum);
+												case 6:	FuncAula.atribuirAula(ginasios, ginum);
+												break;
+												
+												// ------ remover instrutor ----------
+												case 7: FuncAula.removerInstrutor(ginasios, ginum);
 												break;
 												
 												// ------ alterar aula ----------
-												case 6: 
+												case 8: FuncAula.alterarAula(ginasios, ginum);
 												break;
 												
 												// ------ apagar aula ----------
-												case 7:	
+												case 9:	FuncAula.apagarAula(ginasios, ginum);
 												break;
 												
 												// ------ sair ----------
-												case 8:	System.out.println("A voltar...");
+												case 10:	System.out.println("A voltar...");
 												break;
 												
 												default: System.out.println("Opção errada! Tente novamente!");
 												}
-											} while(escolha4 != 8);
-									break;
-									
-									// --------- opções das pessoas ------------------
-									case 4: escolha4 = 1;
-											do {
-												escolha4 = 0; // futuro menu pessoa
-											} while(escolha4 != 5);
+											} while(escolha4 != 10);
 									break;
 									
 									// --------- opções das estatísticas ------------------
-									case 5:	escolha4 = 1;
+									case 4:	escolha4 = 1;
 											do {
 												escolha4 = menustats();
 												int escolha5 = 1;
@@ -344,13 +330,17 @@ public class GerirGinasio {
 															case 4:	FuncStats.memInscAula(ginasios, ginum);
 															break;
 															
+															// ------ género em percentagem ----------
+															case 5: FuncStats.membrosGenero(ginasios, ginum);
+															break;
+															
 															// ------ sair ----------
-															case 5:	
+															case 6:	
 															break;
 															
 															default: System.out.println("Opção errada! Tente novamente!");
 															}
-														} while(escolha5 != 5);
+														} while(escolha5 != 6);
 														
 												break;
 												
@@ -376,23 +366,47 @@ public class GerirGinasio {
 														break;
 														
 														// ------ nº de staff que dá uma ou mais aulas ----------
-														case 5: // FuncStats.aulasStaff(ginasios, ginum);
+														case 5: FuncStats.aulasStaff(ginasios, ginum);
+														break;
+														
+														// ------ staff por género
+														case 6:	FuncStats.generoStaff(ginasios, ginum);
 														break;
 														
 														// ------ sair ----------
-														case 6:	
+														case 7:	
 														break;
 														
 														default: System.out.println("Opção errada! Tente novamente!");
 														}
-													} while(escolha5 != 6);
+													} while(escolha5 != 7);
 		
 												break;
 												
 												// ------ aulas ----------
 												case 3: do {
 														escolha5 = FuncStats.menuAula();
-													} while(escolha5 != 8);
+														switch(escolha5) {
+														
+														// ------ nº de aulas ----------
+														case 1:	FuncStats.aulasTotal(ginasios, ginum);
+														break;
+														
+														// ------ dia de semana ----------
+														case 2:	FuncStats.aulasDDS(ginasios, ginum);
+														break;
+														
+														// ------ manha/tarde ----------
+														case 3: FuncStats.aulasManhaTarde(ginasios, ginum);
+														break;
+														
+														// ------ voltar ----------
+														case 4: System.out.println("  A voltar...");
+														break;
+														
+														default: System.out.println("  Opção errada! Tente novamente!");
+														}
+													} while(escolha5 != 4);
 												
 												break;
 												
@@ -404,13 +418,13 @@ public class GerirGinasio {
 									break;
 									
 									// --------- sair ------------------
-									case 6: System.out.println("  A voltar...");
+									case 5: System.out.println("  A voltar...");
 											escolha2 = 2;
 									break;
 									
 									default: System.out.println("  Opção errada! Tente novamente!");
 									}
-							} while(escolha3 != 6);
+							} while(escolha3 != 5);
 								
 						
 						break;
@@ -423,7 +437,7 @@ public class GerirGinasio {
 						}
 							
 					} while(escolha2 != 2);
-			break;
+			break;	
 			
 			// ************************** alterar ginásio **************************
 			// *********************************************************************
@@ -432,7 +446,7 @@ public class GerirGinasio {
 			
 			// ************************** apagar ginásio ***************************
 			// *********************************************************************
-			case 5:	FuncGinasio.apagarGinásio(ginasios);
+			case 5:	FuncGinasio.apagarGinasio(ginasios);
 			break;
 			
 			// terminar

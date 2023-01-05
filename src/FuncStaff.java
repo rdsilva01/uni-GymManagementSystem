@@ -1,6 +1,7 @@
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.time.DateTimeException;
 import java.util.ArrayList;
 
 import myinputs.Ler;
@@ -9,6 +10,8 @@ public class FuncStaff {
 	/* ------------------- CRIAR STAFF ----------------------------------------- *
 	 * ------------------------------------------------------------------------- */
 	public static void criarStaff(ArrayList<Ginasio> ginasio, int num) {
+		boolean verif = true;
+		
 		System.out.println("  Insira o primeiro nome: ");
 		String p_nome = Ler.umaString();
 		
@@ -29,13 +32,9 @@ public class FuncStaff {
 			sexo = Ler.umChar();
 		}
 		
-		System.out.println("  Insira a sua data de nascimento ");
-		System.out.println("  Dia: ");
-		int dia = Ler.umInt();
-		System.out.println("  Mês (1-12): ");
-		int mes = Ler.umInt();
-		System.out.println("  Ano: ");
-		int ano = Ler.umInt();
+		
+		int dia = 1, mes = 1, ano = 1;
+
 		
 		System.out.println("  Insira a altura (em centímetros): ");
 		int altura = Ler.umInt();
@@ -46,6 +45,25 @@ public class FuncStaff {
 		String tipo = Ler.umaString();
 		
 		Pessoa pax = new Pessoa(p_nome, u_nome, nif, dia, mes, ano, altura, peso, sexo, "Funcionário do Ginásio");
+		
+		System.out.println("Insira a sua data de nascimento ");
+		verif = true;
+		while(verif) {
+			try {
+				System.out.println("Ano: ");
+				ano = Ler.umInt();
+				System.out.println("Mês (1-12): ");
+				mes = Ler.umInt();
+				System.out.println("Dia: ");
+				dia = Ler.umInt();
+				pax.setDataNasc(ano, mes, dia);
+				verif = false;
+			}
+			catch(DateTimeException d) {
+				System.out.println("Valores errados! Tente novamente! (Lembre-se: Meses de 1 a 12!)");
+			}
+		}
+		
 		Staff mem = new Staff(pax, tipo);
 		
 		mem.setNum_staff(ginasio.get(num).getStaff().size() + 1);
@@ -60,7 +78,7 @@ public class FuncStaff {
 		ginasio.get(num).addPax(mem);
 		
 		try {
-		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("gymdata.md"));
 
 		      // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
 		      os.writeInt(Ginasio.getUltimo());
@@ -78,7 +96,7 @@ public class FuncStaff {
 		int escolha = 1;
 		do {
 			System.out.println("*************************************");
-			System.out.println("Deseja consultar dado:\n 1 - Nome\n  2 - Número de STAFF\n  3 - NIF\n  4 - Voltar");
+			System.out.println("Deseja consultar dado:\n  1 - Nome\n  2 - Número de STAFF\n  3 - NIF\n  4 - Voltar");
 			System.out.print("*************************************\n  Opção:");
 			escolha = Ler.umInt();
 			switch(escolha) {
@@ -166,6 +184,15 @@ public class FuncStaff {
 						if(controlo2 == 1) { // se 1 - Sim, remove o membro e sai
 							ginasio.get(num).getStaff().remove(i);
 							System.out.println("  STAFF removido com sucesso!");
+							for(int j = 0; j < ginasio.get(num).getAulas().size(); j++) {
+								if(ginasio.get(num).getAulas().get(j).getInstrutor().get(0).getNum_staff() == numem){
+									ginasio.get(num).getAulas().get(j).getInstrutor().remove(0);
+								}
+								else if(ginasio.get(num).getAulas().get(j).getInstrutor().get(1).getNum_staff() == numem) {
+									ginasio.get(num).getAulas().get(j).getInstrutor().remove(1);
+								}
+							}
+							
 							return;	
 						}
 						else if(controlo2 == 2) { // se 2 - Não, repete!
@@ -179,7 +206,7 @@ public class FuncStaff {
 		
 		// ESCRITA PARA O FICHEIRO DOS GINÁSIOS
 			try {
-				 ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+				 ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("gymdata.md"));
 
 				 // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
 				 os.writeInt(Ginasio.getUltimo());
@@ -194,6 +221,8 @@ public class FuncStaff {
 	/* ------------------- ALTERAR STAFF --------------------------------------- *
 	 * ------------------------------------------------------------------------- */
 	public static void alterarStaff(ArrayList<Ginasio> ginasio, int num) {
+		boolean verif = true;
+		
 		System.out.println("  Insira o número do Staff que pretende alterar");
 		int numm = Ler.umInt();
 		
@@ -265,24 +294,48 @@ public class FuncStaff {
 								System.out.print("*************************************\n  Opção: ");
 								escidade = Ler.umInt();
 								switch(escidade) {
-								case 1:	System.out.println("  Insira o novo dia: ");
-										int dia = Ler.umInt();
-										
-										ginasio.get(num).getStaff().get(i).setDataNasc(ginasio.get(num).getMembros().get(i).getDataNasc().getYear(), ginasio.get(num).getMembros().get(i).getDataNasc().getMonthValue(), dia);
+								case 1:	verif = true;
+										while(verif) {
+											try {
+												System.out.println("  Insira o novo dia: ");
+												int dia = Ler.umInt();
+												ginasio.get(num).getStaff().get(i).setDataNasc(ginasio.get(num).getMembros().get(i).getDataNasc().getYear(), ginasio.get(num).getMembros().get(i).getDataNasc().getMonthValue(), dia);
+												verif = false;
+											}
+											catch(DateTimeException d) {
+												System.out.println("Valor errado! Tente novamente!");
+											}
+										}
 								break;
 						
-								case 2: System.out.println("  Insira o novo mês (1-12): ");
-										int mes = Ler.umInt();
-										while(mes >= 1 && mes <= 12) {
+								case 2: verif = true;
+										while(verif) {
+										try {
+											System.out.println("  Insira o novo mês (1-12): ");
+											int mes = Ler.umInt();
 											ginasio.get(num).getStaff().get(i).setDataNasc(ginasio.get(num).getMembros().get(i).getDataNasc().getYear(), mes, ginasio.get(num).getMembros().get(i).getDataNasc().getDayOfMonth());
+											verif = false;
 										}
+										catch(DateTimeException d) {
+											System.out.println("Valor errado! Insira um valor entre 1 e 12");
+										}
+									}
+										
 								break;
 						
-								case 3:	System.out.println("  Insira o novo ano (1900 - 2022): ");
-										int ano = Ler.umInt();
-										while(ano >= 1900 && ano <= 2022) {
+								case 3:	verif = true;
+										while(verif) {
+										try {
+											System.out.println("  Insira o novo ano: ");
+											int ano = Ler.umInt();
 											ginasio.get(num).getStaff().get(i).setDataNasc(ano, ginasio.get(num).getMembros().get(i).getDataNasc().getMonthValue(), ginasio.get(num).getMembros().get(i).getDataNasc().getDayOfMonth());
+											verif = false;
 										}
+										catch(DateTimeException d) {
+											System.out.println("Valor errado! Tente novamente!");
+										}
+									}
+										
 								break;
 								
 								case 4:
@@ -388,7 +441,7 @@ public class FuncStaff {
 		
 		// ESCRITA PARA O FICHEIRO DOS GINÁSIOS
 		try {
-		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("/Users/rdsilva/Developer/java/GinásioProject/gymdata.md"));
+		      ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("gymdata.md"));
 
 		      // escrever o objeto (ArrayList<Ginasio>) ginasios no ficheiro
 		      os.writeInt(Ginasio.getUltimo());

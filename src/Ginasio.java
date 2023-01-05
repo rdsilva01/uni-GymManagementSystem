@@ -1,12 +1,13 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Ginasio implements Serializable{
 	private static int ultimo = 0; // static do valor do nº do ginásio
 	private int num;
 	private String nome;
 	private ArrayList<Double> precos;
-	private ArrayList<Double> quotas;
+	private Double quota;
 	private ArrayList<Aula> aulas;
 	private ArrayList<Membro> membros;
 	private ArrayList<Pessoa> totalpax;
@@ -19,8 +20,7 @@ public class Ginasio implements Serializable{
 		precos.add((double) 30); // preço base
 		precos.add(0.5); // multiplicador do preco pela idade
 		precos.add(0.5); // multiplicador do preco pela idade
-		quotas = new ArrayList<Double>();
-		quotas.add(0.5 * precos.get(0));
+		quota = 0.5 * precos.get(0);
 		aulas = new ArrayList<Aula>();
 		membros = new ArrayList<Membro>();
 		totalpax = new ArrayList<Pessoa>();
@@ -44,12 +44,12 @@ public class Ginasio implements Serializable{
 		this.precos = precos;
 	}
 
-	public ArrayList<Double> getQuotas() {
-		return quotas;
+	public Double getQuota() {
+		return quota;
 	}
 
-	public void setQuotas(ArrayList<Double> quotas) {
-		this.quotas = quotas;
+	public void setQuota(Double quota) {
+		this.quota = quota;
 	}
 
 	public ArrayList<Aula> getAulas() {
@@ -113,6 +113,7 @@ public class Ginasio implements Serializable{
 		String memstring = "";
 		String staffstring = "";
 		String aulastring = "";
+		String precosstring =  "\n  - " + precos.get(0) + "€";
 		
 		for(int i = 0; i < membros.size(); i++) {
 			memstring += "+---------------------------------+\n" + membros.get(i).toString();
@@ -123,13 +124,24 @@ public class Ginasio implements Serializable{
 		}
 		
 		for(int k = 0; k < aulas.size(); k++) {
-			aulastring += "+---------------------------------+\n" + aulas.get(k).toString();
+			aulastring += "\n" + aulas.get(k).toString() + "\n";
+		}
+		
+		for(int l = 1; l < precos.size(); l++) {
+			precosstring += "\n  - " + (precos.get(l) * precos.get(0)) + " €";
+		}
+		
+		
+		String nomenum = num + nome;
+		String nomenum2 = "+";
+		for(int m = 0; m < nomenum.length() + 15; m++) {
+			nomenum2 += "-";
 		}
 		
 		
 		
-		return "****************************************\n****************************************\n  Nº[" + num + "] - NOME: " + nome + "\n****************************************\n****************************************\n  Preços: " + precos + "; Quotas: " + quotas + "\n  Aulas:\n"
-				+ aulastring + "\n\n+---------+\n| Membros |\n+---------+\n" + memstring + "+-------+\n| Staff |\n+-------+\n" + staffstring + "\n  Total de Pessoas [" + (membros.size()+staff.size()) + "]\n****************************************\n";
+		return "\n" + nomenum2 + "+\n| Nº[" + num + "] - NOME: " + nome + " |\n" + nomenum2 + "+\n\n\n +--------+\n | Preços |\n +--------+\n" + precosstring + "\n  - Quota: " + quota + "\n\n +-------+\n | Aulas |\n +-------+\n"
+				+ aulastring + "\n\n +---------+\n | Membros |\n +---------+\n" + memstring + " +-------+\n | Staff |\n +-------+\n" + staffstring + "\n  Total de Pessoas [" + (membros.size()+staff.size()) + "]\n****************************************\n";
 	}									
 
 	public static void setUltimo(int ult) {
@@ -143,8 +155,21 @@ public class Ginasio implements Serializable{
 	public void addAula(Aula a) {
 		aulas.add(a);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ginasio other = (Ginasio) obj;
+		return Objects.equals(aulas, other.aulas) && Objects.equals(membros, other.membros)
+				&& Objects.equals(nome, other.nome) && num == other.num && Objects.equals(precos, other.precos)
+				&& Objects.equals(quota, other.quota) && Objects.equals(staff, other.staff)
+				&& Objects.equals(totalpax, other.totalpax);
+	}
 	
-	// equals
 	
-	// clone
 }
